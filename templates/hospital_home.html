@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Hospital Dashboard</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f4f7f9;margin:0;padding:20px}
+    h1{color:#0a3d62;margin:0 0 10px}
+    .sub{color:#335; margin:0 0 18px}
+    .cards{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 22px}
+    .card{background:#fff;padding:16px 18px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.08);min-width:230px}
+    .card .k{color:#556; font-size:12px; letter-spacing:.3px; text-transform:uppercase}
+    .card .v{font-size:26px;margin-top:6px}
+    .delta{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:14px}
+    .delta.up{color:#c62828}
+    .delta.down{color:#2e7d32}
+    .delta.flat{color:#6c757d}
+    .btns{margin:4px 0 18px}
+    .btn{display:inline-block;margin:6px 10px 0 0;padding:10px 16px;background:#0a3d62;color:#fff;text-decoration:none;border-radius:8px}
+    .btn:hover{background:#073d52}
+    table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.08);border-radius:10px;overflow:hidden}
+    th,td{padding:12px 14px;border-bottom:1px solid #eee;text-align:left;white-space:nowrap}
+    th{background:#0a3d62;color:#fff;font-weight:600}
+    tr:nth-child(even){background:#fafafa}
+    .muted{color:#6b7280}
+  </style>
+</head>
+<body>
+  <h1>{{ hospital_name }} — Monthly Cost Analysis</h1>
+  <p class="sub muted">Track spending trends, compare with last month, and monitor reductions.</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="k">Current Month</div>
+      <div class="v">{{ current_month or '-' }}</div>
+      <div class="k" style="margin-top:8px">Total Cost</div>
+      <div class="v">
+        {% if current_cost is not none %}₹{{ '%.2f' % current_cost }}{% else %}-{% endif %}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="k">Previous Month</div>
+      <div class="v">{{ previous_month or '-' }}</div>
+      <div class="k" style="margin-top:8px">Total Cost</div>
+      <div class="v">
+        {% if prev_cost is not none %}₹{{ '%.2f' % prev_cost }}{% else %}-{% endif %}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="k">Change vs Previous</div>
+      {% if delta is not none %}
+        <div class="v">
+          {% set cls = 'flat' %}
+          {% if trend == 'down' %}{% set cls = 'down' %}{% elif trend == 'up' %}{% set cls = 'up' %}{% endif %}
+          <div class="delta {{ cls }}">
+            <span>
+              ₹{{ '%.2f' % delta }}
+              {% if delta_pct is not none %} ({{ '%.2f' % delta_pct }}%){% endif %}
+            </span>
+            {% if trend == 'down' %}⬇️ Saving
+            {% elif trend == 'up' %}⬆️ Increase
+            {% else %}→ No Change{% endif %}
+          </div>
+        </div>
+      {% else %}
+        <div class="v">-</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="btns">
+    <a class="btn" href="{{ url_for('hospital_costs') }}">Manage Monthly Costs</a>
+    <a class="btn" href="{{ url_for('hospital_ehr') }}">EHR Requests</a>
+  </div>
+
+  <h2 class="muted" style="margin:12px 0">Recent Months</h2>
+  <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Total Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if data and data|length > 0 %}
+          {% for m, c in data %}
+            <tr>
+              <td>{{ m }}</td>
+              <td>₹{{ '%.2f' % c }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="2" class="muted">No cost data yet.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

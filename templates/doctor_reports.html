@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Doctor Reports</title>
+  <style>
+    body{font-family:Arial;background:#f4f7f9;margin:0;padding:20px}
+    h1{color:#0a3d62}
+    table{width:100%;border-collapse:collapse;background:#fff;margin-top:20px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    th,td{padding:10px;border:1px solid #ddd;text-align:left;white-space:nowrap}
+    th{background:#0a3d62;color:#fff;position:sticky;top:0}
+    tr:nth-child(even){background:#f9f9f9}
+    form{margin-bottom:20px}
+    input[type=text]{padding:6px;width:280px}
+    button{padding:6px 12px;background:#0a3d62;color:#fff;border:none;border-radius:4px;cursor:pointer}
+    .muted{color:#666}
+  </style>
+</head>
+<body>
+  <h1>Patient Reports</h1>
+  <form method="get">
+    <input type="text" name="q" placeholder="Search by patient name/email" value="{{ q or '' }}">
+    <button type="submit">Search</button>
+  </form>
+
+  <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Checkup Time</th>
+          <th>Patient</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>BMI</th>
+          <th>BP (S/D)</th>
+          <th>Heart Rate</th>
+          <th>Stress</th>
+          <th>Diseases</th>
+          <th>Risk</th>
+          <th>LOS</th>
+          <th>Readmission</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in reports %}
+        <tr>
+          <td>{{ r[0] }}</td> <!-- checkup_time -->
+          <td>{{ r[3] }}</td> <!-- patient_name -->
+          <td>{{ r[4] }}</td> <!-- patient_email -->
+          <td>{{ r[5] }}</td> <!-- age -->
+          <td>{% if r[6]==1 %}Male{% elif r[6]==0 %}Female{% else %}-{% endif %}</td> <!-- gender -->
+          <td>{{ r[7] }}</td> <!-- bmi -->
+          <td>{{ r[8] }}/{{ r[9] }}</td> <!-- systole/diastole -->
+          <td>{{ r[10] }}</td> <!-- heart_rate -->
+          <td>{{ r[11] or '-' }}</td> <!-- stress_level -->
+          <td>{{ r[12] or '-' }}</td> <!-- diseases -->
+          <td>{{ r[13] if r[13] is not none else '-' }}</td> <!-- risk_score -->
+          <td>{{ r[14] if r[14] is not none else '-' }}</td> <!-- predicted_los -->
+          <td>
+            {% if r[15] %}
+              {{ r[15] }}
+              {% if r[16] is not none %}
+                ({{ '%.2f' % r[16] }})
+              {% endif %}
+            {% else %}-{% endif %}
+          </td> <!-- readmission label (prob) -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

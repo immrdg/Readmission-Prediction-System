@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" href="{{ url_for('static', filename='images/main.jpg') }}" type="image/gif" />
+  <title>Hospital Readmission Prediction and Prevention</title>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+  <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet"/>
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
+  <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet"/>
+  
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png" />
+    
+    <title>Health-Check</title>
+  
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet"/>
+  
+    <style>
+      .register-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+  
+      .register-btn:hover {
+        background-color: #218838;
+        color: white;
+      }
+  
+      /* Style for the logo */
+      .logo {
+        width: 150px; /* Adjust the width as needed */
+        height: auto;
+        margin-right: 15px;
+      }
+      
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+
+
+
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+
+    .navbar-nav .nav-item {
+      margin-right: 20px;
+    }
+
+    .navbar-nav .nav-link {
+      font-size: 18px;
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .register-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .register-btn:hover {
+      background-color: #218838;
+      color: white;
+    }
+
+    .detail-box h1 {
+      font-size: 48px;
+      font-family: 'Georgia', serif;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      margin-bottom: 10px;
+    }
+
+    .detail-box {
+      text-align: center;
+      margin-top: -50px;
+    }
+
+    .detail-box p {
+      font-size: 20px;
+      font-family: 'Georgia', serif;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      margin-right: 16px;
+      margin-bottom: 10px;
+      white-space: nowrap;
+      text-align: right;
+      padding-right: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .detail-box {
+        text-align: center;
+        margin-top: 0;
+      }
+      .detail-box p {
+        padding-right: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a href="{{ url_for('index') }}" class="navbar-brand">
+          <span>Hospital Readmission Prediction and Prevention</span>
+        </a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('hospital_login') }}">Hospital Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('doctor_login') }}">Doctor Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('login') }}">PSS Login</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- End of header section -->
+
+  <!-- slider section -->
+  <section class="slider_section position-relative">
+    <div class="slider_bg_box">
+      <img src="{{ url_for('static', filename='images/c2.png') }}" alt="">
+    </div>
+    <div class="slider_bg"></div>
+    <div class="container">
+      <div class="col-md-6 ml-auto">
+        <div class="detail-box">
+          <h1>Smart Risk Prediction</h1>
+          <p>Your Health, Our Priority – Predicting Risks, Ensuring Care</p>
+          <a href="{{ url_for('register') }}" class="register-btn">Register Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End of slider section -->
+
+  <!-- Special section -->
+  
+  <!-- End of special section -->
+
+  <!-- about section -->
+  
+  <!-- End of about us page -->
+
+  <!-- end of footer section -->
+
+  <!-- jQery -->
+  <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+  <!-- bootstrap js -->
+  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+  <!-- custom js -->
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+
+</body>
+</html>

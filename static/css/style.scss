@@ -1,0 +1,122 @@
+
+$white: #ffffff;
+$black: #000000;
+$primary1: #5A9;
+$primary2: #1B5E20;
+$accent: #FF5252;
+$bgColor: #f5f5f5;
+$fontColor: #333;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+@mixin main-font {
+  font-family: "Roboto", sans-serif;
+}
+
+@mixin secondary-font {
+  font-family: 'Playfair Display', serif;
+}
+
+@mixin hero_btn($col1, $col2, $pad1, $pad2, $bRadius) {
+  display: inline-block;
+  padding: $pad1 $pad2;
+  background-color: $col1;
+  color: $col2;
+  border-radius: $bRadius;
+  border: 1px solid $col1;
+  transition: all .3s ease-in-out;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: transparent;
+    color: $col1;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+}
+
+@mixin upperBold {
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+/* Global Styles */
+body {
+  @include main-font;
+  color: $fontColor;
+  background-color: $bgColor;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @include secondary-font;
+  color: $primary2;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+a {
+  color: $primary1;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.layout_padding {
+  padding: 100px 0;
+}
+
+.layout_padding2 {
+  padding: 50px 0;
+}
+
+/* Enhanced Button Styles */
+.btn-primary {
+  @include hero_btn($primary1, $white, 12px, 24px, 30px);
+}
+
+.btn-secondary {
+  @include hero_btn($primary2, $white, 12px, 24px, 30px);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col {
+  flex: 1;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .layout_padding {
+    padding: 70px 0;
+  }
+
+  .layout_padding2 {
+    padding: 35px 0;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 10px 20px;
+  }
+}

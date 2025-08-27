@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Discharge Care</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #00695c;
+            padding: 20px;
+            color: white;
+            font-size: 1.5em;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #00695c;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px; /* Space below the heading */
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-size: 1.1em;
+        }
+        select, .checkbox-container {
+            padding: 10px;
+            margin: 5px 0 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+        select {
+            width: 100%;
+        }
+        .checkbox-container {
+            width: 80%; /* Reduced width for the checkbox container */
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .checkbox-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: white;
+            background-color: #00695c;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="riskometer">Post-Discharge Care</a>
+        <span></span> <!-- Empty span to center the title -->
+        <span></span> <!-- Empty span to keep the header balanced -->
+    </header>
+
+    <div class="container">
+        <h1>Select Your Health Conditions</h1>
+        <form action="{{ url_for('preventive_measures') }}" method="post">
+            <label for="risk_level">Risk Level:</label>
+            <select id="risk_level" name="risk_level" required>
+                <option value="1">1-2</option>
+                <option value="2">2-4</option>
+                <option value="3">41-60</option>
+                <option value="4">61-80</option>
+                <option value="5">81-100</option>
+            </select>
+
+            <label for="diseases">Do You Have Any of These Conditions?</label>
+            <div class="checkbox-container">
+                <label><input type="checkbox" name="diseases" value="Diabetes"> Diabetes</label>
+                <label><input type="checkbox" name="diseases" value="Heart Disease"> Heart Disease</label>
+                <label><input type="checkbox" name="diseases" value="Hypertension"> Hypertension</label>
+                <label><input type="checkbox" name="diseases" value="Liver Disease"> Liver Disease</label>
+                <label><input type="checkbox" name="diseases" value="Asthma"> Asthma</label>
+                <label><input type="checkbox" name="diseases" value="Obesity"> Obesity</label>
+                <label><input type="checkbox" name="diseases" value="Anemia"> Anemia</label>
+            </div>
+
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>

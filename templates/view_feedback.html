@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Submissions - Riskometer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #20b2aa;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        header .brand {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.1em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4682b4;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .feedback-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .feedback-table th,
+        .feedback-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .feedback-table th {
+            background-color: #20b2aa;
+            color: white;
+            font-weight: bold;
+        }
+
+        .feedback-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .feedback-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .status-pending {
+            color: #ff6b35;
+            font-weight: bold;
+        }
+
+        .status-resolved {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .message-cell {
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        .no-feedback {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #20b2aa, #4682b4);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('index') }}" class="brand">Riskometer</a>
+        <nav>
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+            <a href="{{ url_for('feedback') }}" class="nav-link">Submit Feedback</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Feedback Submissions</h1>
+
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Feedback</h3>
+                <div class="value">{{ feedback_list|length }}</div>
+            </div>
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <div class="value">{{ feedback_list|selectattr('6', 'equalto', 'pending')|list|length }}</div>
+            </div>
+            <div class="stat-card">
+                <h3>This Month</h3>
+                <div class="value">{{ feedback_list|selectattr('5', 'match', '.*' + moment().format('YYYY-MM') + '.*')|list|length if moment else feedback_list|length }}</div>
+            </div>
+        </div>
+
+        {% if feedback_list %}
+        <table class="feedback-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feedback in feedback_list %}
+                <tr>
+                    <td>{{ feedback[0] }}</td>
+                    <td>{{ feedback[1] }}</td>
+                    <td>{{ feedback[2] }}</td>
+                    <td>{{ feedback[3] }}</td>
+                    <td class="message-cell">{{ feedback[4] }}</td>
+                    <td>{{ feedback[5] }}</td>
+                    <td>
+                        <span class="status-{{ feedback[6] }}">
+                            {{ feedback[6].title() }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-feedback">
+            <p>No feedback submissions yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

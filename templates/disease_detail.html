@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details for {{ disease_name }}</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background-color: #e6e6e6; /* Slightly darker background color */
+            font-family: Arial, sans-serif; /* Set a default font */
+            margin: 0; /* Remove default margin to eliminate white space */
+            padding: 0; /* Remove default padding to eliminate white space */
+        }
+        .header {
+            background-color: #333333; /* Dark gray background for the header */
+            padding: 20px;
+            text-align: center;
+            color: #ffffff; /* White text color for the header */
+            border-radius: 0 0 5px 5px; /* Rounded bottom corners */
+            position: relative;
+        }
+        .riskometer-btn, .analysis-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #4CAF50; /* Green color for the buttons */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .riskometer-btn {
+            left: 20px;
+        }
+        .analysis-btn {
+            right: 20px;
+        }
+        .riskometer-btn:hover, .analysis-btn:hover {
+            background-color: #45a049; /* Darker shade on hover */
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            text-align: center; /* Center all content */
+            margin-top: 20px;
+        }
+        h2 {
+            color: #555; /* Slightly lighter color for subheadings */
+            margin-bottom: 30px; /* Increased margin to push charts down */
+        }
+        .chart-container {
+            margin-bottom: 40px; /* Add space between charts */
+            padding-top: 20px; /* Add padding at the top to push the charts down */
+            display: flex;
+            justify-content: center;
+        }
+        .chart-container div {
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- Riskometer button that redirects to the dashboard page -->
+        <a href="/home" class="riskometer-btn">Riskometer</a>
+
+        <!-- Main heading -->
+        <h1>Analysis for {{ disease_name }}</h1>
+
+        <!-- Button to navigate to the analysis page -->
+        <a href="/analysis" class="analysis-btn">Back to Analysis</a>
+    </div>
+
+    <div class="container">
+        <div class="chart-container">
+            <h2></h2>
+            <div id="gender-chart"></div>
+            <script>
+                var genderData = {{ graphJSON_gender | safe }};
+                genderData.layout.bargap = 0.4; // Increase gap between bars for narrower bars
+                genderData.layout.margin = { t: 50, b: 50, l: 50, r: 50 }; // Adjust margins for a better fit
+                genderData.layout.height = 400; // Set a specific height for better proportion
+                genderData.layout.width = 600;  // Set a specific width for better proportion
+                Plotly.newPlot('gender-chart', genderData.data, genderData.layout);
+            </script>
+        </div>
+
+        <div class="chart-container">
+            <h2></h2>
+            <div id="age-chart"></div>
+            <script>
+                var ageData = {{ graphJSON_age | safe }};
+                ageData.layout.bargap = 0.3; // Increase gap between bars for narrower bars
+                ageData.layout.margin = { t: 50, b: 50, l: 50, r: 50 }; // Adjust margins for a better fit
+                ageData.layout.xaxis = {
+                    tickangle: -45, // Rotate x-axis labels if needed
+                    dtick: 10, // Increase the number of ticks to space them out
+                    title: 'Age'
+                };
+                ageData.layout.yaxis = {
+                    title: 'Count'
+                };
+                ageData.layout.height = 400; // Set a specific height for better proportion
+                ageData.layout.width = 600;  // Set a specific width for better proportion
+                Plotly.newPlot('age-chart', ageData.data, ageData.layout);
+            </script>
+        </div>
+    </div>
+</body>
+</html>

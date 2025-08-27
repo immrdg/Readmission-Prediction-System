@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Risk Results</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background-color: #00b09b;
+            padding: 10px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 10px;
+            font-weight: bold;
+            padding: 8px 16px;
+            background-color: #007a6e;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        header nav a:hover {
+            background-color: #005f53;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #00b09b;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e1f7f5;
+        }
+
+        td {
+            color: #555;
+        }
+
+        a.back-home {
+            text-decoration: none;
+            color: #00b09b;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border: 2px solid #00b09b;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        a.back-home:hover {
+            background-color: #00b09b;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Previous Risk Results</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('checkup') }}">Riskometer</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% if results %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date and Time</th>
+                        <th>Result ID</th>
+                        <th>Stress Level</th>
+                        <th>Diseases</th>
+                        <th>Risk Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result[0] }}</td>
+                            <td>{{ result[1] }}</td>
+                            <td>{{ result[2] }}</td>
+                            <td>{{ result[3] }}</td>
+                            <td>{{ result[4] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No previous results found.</p>
+        {% endif %}
+
+        <a href="{{ url_for('home') }}" class="back-home">Back to Home</a>
+    </div>
+</body>
+</html>

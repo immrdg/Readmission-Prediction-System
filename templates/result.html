@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prediction Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #00695c;
+      padding: 20px 40px;
+      color: white;
+      font-size: 1.5em;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+    }
+    header .riskometer {
+      font-weight: bold;
+      font-size: 1.5em;
+      margin-left: -20px;
+    }
+    header .home {
+      font-size: 1.2em;
+      padding: 5px 15px;
+      background-color: #004d40;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 24px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    h1 {
+      color: #00695c;
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .sub {
+      text-align: center;
+      color: #555;
+      margin-top: -6px;
+      margin-bottom: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #fafafa;
+      border: 1px solid #e3e3e3;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .card h3 {
+      margin: 0 0 8px 0;
+      color: #004d40;
+      font-size: 1.1em;
+    }
+    .kv {
+      margin: 6px 0;
+      font-size: 1.05em;
+    }
+    .kv strong {
+      color: #333;
+    }
+    .list {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      font-size: 1.05em;
+      color: white;
+      background-color: #00695c;
+      border: none;
+      border-radius: 6px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="riskometer">Hospital Readmission Prediction and Prevention</a>
+    <a href="/home" class="home">Home</a>
+  </header>
+
+  <div class="container">
+    <h1>Prediction Result for {{ name }} </h1>
+    <p class="sub">Below are your model-driven risk insights and predictions.</p>
+
+    <div class="grid">
+      <!-- Stress -->
+      <div class="card">
+        <h3>Stress</h3>
+        <p class="kv"><strong>Predicted Stress Level:</strong> {{ stress_level }}</p>
+      </div>
+
+      <!-- Diseases -->
+      <div class="card">
+        <h3>Predicted Diseases</h3>
+        {% if diseases and diseases|length %}
+          <ul class="list">
+            {% for d in diseases %}
+              <li>{{ d }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="kv">None predicted (Healthy)</p>
+        {% endif %}
+      </div>
+
+      <!-- Risk -->
+      <div class="card">
+        <h3>Risk Summary</h3>
+        <p class="kv">
+          <strong>Risk Score:</strong> {{ risk_score }}
+          {% if risk_category %}
+            ({{ risk_category }})
+          {% endif %}
+        </p>
+      </div>
+
+      <!-- Claim Outcomes (if available) -->
+      <div class="card">
+        <h3>Claim Outcomes</h3>
+        {% if predicted_los is not none %}
+          <p class="kv"><strong>Predicted Length of Stay:</strong> {{ predicted_los }} days</p>
+        {% else %}
+          <p class="kv"><em>Length of Stay not available.</em></p>
+        {% endif %}
+
+        {% if readmission_label %}
+          <p class="kv">
+            <strong>30-day Readmission:</strong>
+            {{ readmission_label }}
+            {% if readmission_prob is not none %}(Prob={{ "%.2f"|format(readmission_prob) }}){% endif %}
+          </p>
+        {% else %}
+          <p class="kv"><em>Readmission prediction not available.</em></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="btns">
+      <a href="/preventive_measures" class="btn">Post-Discharge Care</a>
+    </div>
+  </div>
+
+</body>
+</html>

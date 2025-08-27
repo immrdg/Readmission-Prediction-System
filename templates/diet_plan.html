@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Plan - Patient Risk Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        header {
+            width: 100%;
+            background-color: #20b2aa;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        header .brand {
+            font-size: 2em; /* Increased font size for "Riskometer" */
+            font-weight: bold;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        header .nav-link {
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #ffffff;
+            padding: 5px 15px; /* Simplified padding for Home button */
+            margin-right: 20px; /* Aligns the Home button correctly */
+            background-color: #1b9b93; /* Background color for Home button */
+            border-radius: 5px; /* Rounded corners for Home button */
+            transition: background-color 0.3s ease;
+        }
+
+        header .nav-link:hover {
+            background-color: #148279; /* Slightly darker color on hover */
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow-y: auto; /* Enable scrolling if necessary */
+        }
+
+        .container h1 {
+            font-size: 2.5em; /* Increased font size for the main heading */
+            margin-bottom: 15px;
+            text-align: center;
+            color: #4682b4; /* Same SteelBlue color for the Welcome text */
+        }
+
+        .container h2 {
+            font-size: 1.8em; /* Increased font size for sub-headings */
+            margin-bottom: 10px;
+            color: #4682b4; /* SteelBlue color for sub-headings */
+        }
+
+        .container p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #696969; /* DimGray color for the paragraph text */
+        }
+
+        .container input[type="text"],
+        .container input[type="number"],
+        .container select {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+
+        .food-type {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .food-type button {
+            padding: 12px 25px;
+            margin-right: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #00ced1;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-size: 1.1em;
+            color: #fff;
+        }
+
+        .food-type button:hover {
+            background-color: #20b2aa;
+            transform: scale(1.05);
+        }
+
+        .food-type button.selected {
+            background-color: #008b8b;
+            color: white;
+        }
+
+        .personal-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 20px; /* Space between age, height, and weight fields */
+        }
+
+        .personal-info .input-group {
+            flex: 1;
+        }
+
+        .personal-info label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2f4f4f;
+        }
+
+        .medical-history {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .medical-history h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #4682b4; /* SteelBlue color for the medical history heading */
+        }
+
+        .disease-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .disease-checkbox input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .diet-plan-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: #008b8b;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .diet-plan-button:hover {
+            background-color: #006b6b;
+        }
+
+        .diet-plan-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="{{ url_for('index') }}" class="brand">Riskometer</a>
+        <nav>
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>Welcome, {{ name }}</h1> <!-- Displays the username from the Users table -->
+            <p>Tell Us About Your Dietary Habits And Medical History</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('diet_plan') }}" id="diet-form">
+            <div class="food-type">
+                <h2>Preferred food type?</h2>
+                <input type="hidden" name="food_type" id="food_type" value="">
+                <button type="button" class="food-button" data-type="vegetarian">Vegetarian</button>
+                <button type="button" class="food-button" data-type="non-vegetarian">Non-vegetarian</button>
+                <button type="button" class="food-button" data-type="eggetarian">Eggetarian</button>
+            </div>
+
+        <div class="personal-info">
+            <div class="input-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+            <div class="input-group">
+                <label for="height">Height (cm)</label>
+                <input type="number" id="height" name="height" placeholder="Enter your height in cm" required>
+            </div>
+            <div class="input-group">
+                <label for="weight">Weight (kg)</label>
+                <input type="number" id="weight" name="weight" placeholder="Enter your weight in kg" required>
+            </div>
+            <div class="input-group">
+                <label for="activity_level">Activity Level</label>
+                <select id="activity_level" name="activity_level" required>
+                    <option value="">Select your activity level</option>
+                    <option value="sedentary">Sedentary (little or no exercise)</option>
+                    <option value="light">Light (light exercise 1-3 days/week)</option>
+                    <option value="moderate">Moderate (moderate exercise 3-5 days/week)</option>
+                    <option value="active">Active (hard exercise 6-7 days/week)</option>
+                    <option value="very_active">Very Active (very hard exercise, physical job)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="medical-history">
+            <h2>Please Let Us Know About Your Medical History</h2>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="diabetes" name="diseases" value="diabetes">
+                <label for="diabetes">Diabetes</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="hypertension" name="diseases" value="hypertension">
+                <label for="hypertension">Hypertension</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="cholesterol" name="diseases" value="cholesterol">
+                <label for="cholesterol">High Cholesterol</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="asthma" name="diseases" value="asthma">
+                <label for="asthma">Asthma</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="arthritis" name="diseases" value="arthritis">
+                <label for="arthritis">Arthritis</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="obesity" name="diseases" value="obesity">
+                <label for="obesity">Obesity</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="thyroid" name="diseases" value="thyroid">
+                <label for="thyroid">Thyroid Issues</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="heart-disease" name="diseases" value="heart-disease">
+                <label for="heart-disease">Heart Disease</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="kidney-disease" name="diseases" value="kidney-disease">
+                <label for="kidney-disease">Kidney Disease</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="liver-disease" name="diseases" value="liver-disease">
+                <label for="liver-disease">Liver Disease</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="gastrointestinal-issues" name="diseases" value="gastrointestinal-issues">
+                <label for="gastrointestinal-issues">Gastrointestinal Issues</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="allergies" name="diseases" value="allergies">
+                <label for="allergies">Allergies</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="mental-health" name="diseases" value="mental-health">
+                <label for="mental-health">Mental Health Conditions</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="cancer" name="diseases" value="cancer">
+                <label for="cancer">Cancer</label>
+            </div>
+            <div class="disease-checkbox">
+                <input type="checkbox" id="others" name="diseases" value="others">
+                <label for="others">Others</label>
+            </div>
+        </div>
+
+            <button type="submit" id="diet-plan-button" class="diet-plan-button" disabled>Generate Diet Plan</button> <!-- Disabled initially -->
+        </form>
+    </div>
+
+    <script>
+        let selectedFoodType = null;
+        let ageInput = document.getElementById('age');
+        let heightInput = document.getElementById('height');
+        let weightInput = document.getElementById('weight');
+        let selectedDiseases = [];
+
+        // Add event listener to toggle selection of food type
+        document.querySelectorAll('.food-button').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.food-button').forEach(btn => btn.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedFoodType = this.dataset.type;
+                document.getElementById('food_type').value = selectedFoodType;
+                checkFormCompletion();
+            });
+        });
+
+        // Handle disease selection from checkboxes
+        document.querySelectorAll('.disease-checkbox input').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                selectedDiseases = Array.from(document.querySelectorAll('.disease-checkbox input:checked')).map(checkbox => checkbox.value);
+                checkFormCompletion();
+            });
+        });
+
+        // Enable the diet plan button if all fields are filled
+        ageInput.addEventListener('input', checkFormCompletion);
+        heightInput.addEventListener('input', checkFormCompletion);
+        weightInput.addEventListener('input', checkFormCompletion);
+        document.getElementById('activity_level').addEventListener('change', checkFormCompletion);
+
+        function checkFormCompletion() {
+            const isAgeEntered = ageInput.value.trim() !== '';
+            const isHeightEntered = heightInput.value.trim() !== '';
+            const isWeightEntered = weightInput.value.trim() !== '';
+            const isActivitySelected = document.getElementById('activity_level').value !== '';
+            const isFoodTypeSelected = selectedFoodType !== null;
+            const isDiseasesSelected = selectedDiseases.length > 0;
+
+            if (isAgeEntered && isHeightEntered && isWeightEntered && isActivitySelected && isFoodTypeSelected && isDiseasesSelected) {
+                document.getElementById('diet-plan-button').disabled = false;
+            } else {
+                document.getElementById('diet-plan-button').disabled = true;
+            }
+        }
+    </script>
+</body>
+
+</html>

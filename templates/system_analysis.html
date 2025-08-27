@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Readmission System Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .analysis-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .analysis-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .metric-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .metric-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .performance-good { color: #28a745; }
+        .performance-warning { color: #ffc107; }
+        .performance-poor { color: #dc3545; }
+        .recommendations {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            margin: 15px 0;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .feature-category {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .feature-category h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .feature-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-available { background-color: #28a745; }
+        .status-missing { background-color: #dc3545; }
+        .status-partial { background-color: #ffc107; }
+    </style>
+</head>
+<body>
+    <div class="analysis-container">
+        <h1>Hospital Readmission Prediction System Analysis</h1>
+        
+        <!-- Data Quality Section -->
+        <div class="analysis-section">
+            <h2>Data Quality Assessment</h2>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">{{ analysis.data_quality.total_records }}</div>
+                    <div class="metric-label">Total Records</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ analysis.data_quality.total_claims }}</div>
+                    <div class="metric-label">Total Claims</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ analysis.data_quality.unique_patients }}</div>
+                    <div class="metric-label">Unique Patients</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">{{ "%.1f%"|format(analysis.data_quality.readmission_rate * 100) }}</div>
+                    <div class="metric-label">Readmission Rate</div>
+                </div>
+            </div>
+            
+            <h3>Missing Data Analysis</h3>
+            <div class="feature-list">
+                {% for field, missing_count in analysis.data_quality.missing_values.items() %}
+                    {% if missing_count > 0 %}
+                    <div class="feature-item">
+                        <span class="status-indicator status-missing"></span>
+                        {{ field }}: {{ missing_count }} missing values
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Model Performance Section -->
+        <div class="analysis-section">
+            <h2>Current Model Performance</h2>
+            {% if analysis.model_performance.error %}
+                <div class="alert alert-danger">
+                    Error evaluating model: {{ analysis.model_performance.error }}
+                </div>
+            {% else %}
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value {% if analysis.model_performance.accuracy >= 0.8 %}performance-good{% elif analysis.model_performance.accuracy >= 0.7 %}performance-warning{% else %}performance-poor{% endif %}">
+                            {{ "%.1f%"|format(analysis.model_performance.accuracy * 100) }}
+                        </div>
+                        <div class="metric-label">Accuracy</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{ "%.1f%"|format(analysis.model_performance.precision * 100) }}</div>
+                        <div class="metric-label">Precision</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{ "%.1f%"|format(analysis.model_performance.recall * 100) }}</div>
+                        <div class="metric-label">Recall</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{ "%.3f"|format(analysis.model_performance.f1_score) }}</div>
+                        <div class="metric-label">F1 Score</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{ "%.3f"|format(analysis.model_performance.auc_roc) }}</div>
+                        <div class="metric-label">AUC-ROC</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">{{ "%.1f%"|format(analysis.model_performance.cross_val_accuracy * 100) }}</div>
+                        <div class="metric-label">Cross-Val Accuracy</div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Feature Analysis Section -->
+        <div class="analysis-section">
+            <h2>Feature Analysis</h2>
+            <div class="feature-list">
+                <div class="feature-category">
+                    <h4>Current Features</h4>
+                    {% for feature in analysis.feature_analysis.current_features %}
+                    <div class="feature-item">
+                        <span class="status-indicator status-available"></span>
+                        {{ feature }}
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="feature-category">
+                    <h4>Available Clinical Features</h4>
+                    {% for feature in analysis.feature_analysis.available_clinical_features %}
+                    <div class="feature-item">
+                        <span class="status-indicator status-partial"></span>
+                        {{ feature }}
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="feature-category">
+                    <h4>Missing Important Features</h4>
+                    {% for feature in analysis.feature_analysis.missing_important_features %}
+                    <div class="feature-item">
+                        <span class="status-indicator status-missing"></span>
+                        {{ feature }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Section -->
+        <div class="analysis-section">
+            <h2>Improvement Recommendations</h2>
+            <div class="recommendations">
+                <h3>Priority Actions</h3>
+                <ul>
+                    {% for recommendation in analysis.recommendations %}
+                    <li>{{ recommendation }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Next Steps</h2>
+            <p>Based on this analysis, the following development priorities are recommended:</p>
+            <ol>
+                <li><strong>Enhanced Feature Engineering:</strong> Incorporate clinical and social determinant features</li>
+                <li><strong>Model Improvement:</strong> Implement ensemble methods and advanced algorithms</li>
+                <li><strong>Real-time Integration:</strong> Develop EHR integration for live predictions</li>
+                <li><strong>Care Coordination:</strong> Build automated intervention workflows</li>
+                <li><strong>Validation Framework:</strong> Establish cost savings measurement system</li>
+            </ol>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+            <a href="/enhanced_model_development" class="btn btn-success">Start Model Enhancement</a>
+        </div>
+    </div>
+</body>
+</html>

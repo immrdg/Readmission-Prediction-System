@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Hospital Costs</title>
+  <style>
+    body{font-family:Arial;background:#f4f7f9;margin:0;padding:20px}
+    h1{color:#0a3d62}
+    form{background:#fff;padding:16px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.08);margin-bottom:20px}
+    label{display:block;margin-top:8px}
+    input,textarea{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px}
+    button{margin-top:10px;padding:10px 14px;background:#0a3d62;color:#fff;border:none;border-radius:6px;cursor:pointer}
+    table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    th,td{padding:10px;border:1px solid #ddd;text-align:left}
+    th{background:#0a3d62;color:#fff}
+  </style>
+</head>
+<body>
+  <h1>Monthly Costs</h1>
+  <form method="post">
+    <label>Month (YYYY-MM)</label>
+    <input name="month" placeholder="2025-08" required>
+    <label>Total Cost</label>
+    <input name="total_cost" type="number" step="0.01" required>
+    <label>Notes</label>
+    <textarea name="notes" rows="3" placeholder="Optional notes"></textarea>
+    <button type="submit">Save</button>
+  </form>
+
+  <table>
+    <tr><th>Month</th><th>Total Cost</th><th>Notes</th><th>Created</th></tr>
+    {% for r in all_costs %}
+      <tr>
+        <td>{{ r["month"] }}</td>
+        <td>{{ r["total_cost"] }}</td>
+        <td>{{ r["notes"] or '' }}</td>
+        <td>{{ r["created_at"] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

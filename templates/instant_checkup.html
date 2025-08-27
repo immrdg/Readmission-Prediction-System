@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Risk Checkup</title>
+    <!-- Include your CSS file here -->
+</head>
+<body>
+    <h1>Instant Risk Checkup</h1>
+    <form method="POST" action="{{ url_for('predict') }}">
+        <div>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" value="{{ checkup_data[0] }}" required>
+        </div>
+
+        <div>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="0" {% if checkup_data[1] == 0 %} selected {% endif %}>Female</option>
+                <option value="1" {% if checkup_data[1] == 1 %} selected {% endif %}>Male</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="rbc_count">RBC Count:</label>
+            <input type="number" step="0.01" id="rbc_count" name="rbc_count" value="{{ checkup_data[2] }}" required>
+        </div>
+
+        <div>
+            <label for="wbc_count">WBC Count:</label>
+            <input type="number" step="0.01" id="wbc_count" name="wbc_count" value="{{ checkup_data[3] }}" required>
+        </div>
+
+        <div>
+            <label for="systole">Systolic Blood Pressure:</label>
+            <input type="number" id="systole" name="systole" value="{{ checkup_data[4] }}" required>
+        </div>
+
+        <div>
+            <label for="diastole">Diastolic Blood Pressure:</label>
+            <input type="number" id="diastole" name="diastole" value="{{ checkup_data[5] }}" required>
+        </div>
+
+        <div>
+            <label for="heart_rate">Heart Rate:</label>
+            <input type="number" id="heart_rate" name="heart_rate" value="{{ checkup_data[6] }}" required>
+        </div>
+
+        <div>
+            <label for="allergies">Allergies (0 for No, 1 for Yes):</label>
+            <input type="number" id="allergies" name="allergies" value="{{ checkup_data[7] }}" required>
+        </div>
+
+        <div>
+            <label for="blood_sugar">Blood Sugar:</label>
+            <input type="number" step="0.01" id="blood_sugar" name="blood_sugar" value="{{ checkup_data[8] }}" required>
+        </div>
+
+        <div>
+            <label for="bmi">BMI:</label>
+            <input type="number" step="0.01" id="bmi" name="bmi" value="{{ checkup_data[9] }}" required>
+        </div>
+
+        <div>
+            <label for="cholesterol">Cholesterol:</label>
+            <input type="number" step="0.01" id="cholesterol" name="cholesterol" value="{{ checkup_data[10] }}" required>
+        </div>
+
+        <div>
+            <label for="steps_per_day">Steps Per Day:</label>
+            <input type="number" id="steps_per_day" name="steps_per_day" value="{{ checkup_data[11] }}" required>
+        </div>
+
+        <div>
+            <label for="calorie_intake">Calorie Intake:</label>
+            <input type="number" id="calorie_intake" name="calorie_intake" value="{{ checkup_data[12] }}" required>
+        </div>
+
+        <div>
+            <label for="smoking">Smoking (0 for No, 1 for Yes):</label>
+            <input type="number" id="smoking" name="smoking" value="{{ checkup_data[13] }}" required>
+        </div>
+
+        <div>
+            <label for="alcohol">Alcohol Consumption (0 for No, 1 for Yes):</label>
+            <input type="number" id="alcohol" name="alcohol" value="{{ checkup_data[14] }}" required>
+        </div>
+
+        <div>
+            <label for="sleep_pattern">Sleep Pattern (hours of sleep per day):</label>
+            <input type="number" id="sleep_pattern" name="sleep_pattern" value="{{ checkup_data[15] }}" required>
+        </div>
+
+        <div>
+            <label for="num_claims">Number of Claims:</label>
+            <input type="number" id="num_claims" name="num_claims" value="{{ checkup_data[16] }}" required>
+        </div>
+
+        <div>
+            <label for="procedure_codes">Procedure Codes:</label>
+            <input type="text" id="procedure_codes" name="procedure_codes" value="{{ checkup_data[17] }}" required>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Riskometer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #20b2aa;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        header .brand {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #20b2aa, #4682b4);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .profile-header p {
+            margin: 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section h2 {
+            color: #4682b4;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #20b2aa;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #20b2aa;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #20b2aa, #4682b4);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-card .unit {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .health-indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .health-indicator {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #20b2aa;
+        }
+
+        .health-indicator .label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .health-indicator .value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background-color: #20b2aa;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a9a92;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+
+        .flash-message {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .flash-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .health-indicators {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('index') }}" class="brand">Riskometer</a>
+        <nav>
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+            <a href="{{ url_for('my_reports') }}" class="nav-link">My Reports</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <h1>{{ user_data[0] if user_data else 'User' }}</h1>
+            <p>Manage your personal information and health profile</p>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <!-- Personal Information -->
+            <div class="profile-section">
+                <h2>Personal Information</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="name">Full Name*</label>
+                        <input type="text" id="name" name="name" value="{{ user_data[0] if user_data else '' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age*</label>
+                        <input type="number" id="age" name="age" value="{{ user_data[1] if user_data else '' }}" min="1" max="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender*</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male" {% if user_data and user_data[2] == 'Male' %}selected{% endif %}>Male</option>
+                            <option value="Female" {% if user_data and user_data[2] == 'Female' %}selected{% endif %}>Female</option>
+                            <option value="Other" {% if user_data and user_data[2] == 'Other' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address*</label>
+                        <input type="email" id="email" name="email" value="{{ user_data[3] if user_data else '' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile_number">Mobile Number</label>
+                        <input type="tel" id="mobile_number" name="mobile_number" value="{{ user_data[4] if user_data else '' }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <a href="{{ url_for('change_password') }}" class="btn btn-secondary" style="margin-top: 10px; display: block; text-align: center;">Change Password</a>
+                </form>
+            </div>
+
+            <!-- Health Statistics -->
+            <div class="profile-section">
+                <h2>Health Overview</h2>
+                {% if health_stats and health_stats.latest_health %}
+                <div class="health-indicators">
+                    <div class="health-indicator">
+                        <div class="label">BMI</div>
+                        <div class="value">{{ "%.1f"|format(health_stats.latest_health[0]) if health_stats.latest_health[0] else "N/A" }}</div>
+                    </div>
+                    <div class="health-indicator">
+                        <div class="label">Blood Sugar</div>
+                        <div class="value">{{ "%.0f"|format(health_stats.latest_health[1]) if health_stats.latest_health[1] else "N/A" }}</div>
+                    </div>
+                    <div class="health-indicator">
+                        <div class="label">Cholesterol</div>
+                        <div class="value">{{ "%.0f"|format(health_stats.latest_health[2]) if health_stats.latest_health[2] else "N/A" }}</div>
+                    </div>
+                    <div class="health-indicator">
+                        <div class="label">Blood Pressure</div>
+                        <div class="value">
+                            {% if health_stats.latest_health[3] and health_stats.latest_health[4] %}
+                                {{ health_stats.latest_health[3] }}/{{ health_stats.latest_health[4] }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="health-indicator">
+                        <div class="label">Heart Rate</div>
+                        <div class="value">{{ health_stats.latest_health[5] if health_stats.latest_health[5] else "N/A" }}</div>
+                    </div>
+                    {% if health_stats.latest_risk %}
+                    <div class="health-indicator">
+                        <div class="label">Stress Level</div>
+                        <div class="value">{{ health_stats.latest_risk[0] if health_stats.latest_risk[0] else "N/A" }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <p style="text-align: center; color: #666; font-style: italic;">
+                    No health data available. <a href="{{ url_for('checkup') }}" style="color: #20b2aa;">Take your first checkup</a> to see your health overview.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Activity Summary -->
+        <div class="profile-section full-width">
+            <h2>Activity & Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Checkups</h3>
+                    <div class="value">{{ health_stats.total_checkups if health_stats else 0 }}</div>
+                    <div class="unit">completed</div>
+                </div>
+                {% if activity_summary %}
+                <div class="stat-card">
+                    <h3>Avg Daily Steps</h3>
+                    <div class="value">{{ "{:,}".format(activity_summary.avg_steps) if activity_summary.avg_steps else "0" }}</div>
+                    <div class="unit">steps/day</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Calorie Intake</h3>
+                    <div class="value">{{ "{:,}".format(activity_summary.avg_calories) if activity_summary.avg_calories else "0" }}</div>
+                    <div class="unit">calories/day</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Sleep</h3>
+                    <div class="value">{{ activity_summary.avg_sleep if activity_summary.avg_sleep else "0" }}</div>
+                    <div class="unit">hours/night</div>
+                </div>
+                {% endif %}
+                {% if health_stats and health_stats.latest_risk %}
+                <div class="stat-card">
+                    <h3>Risk Score</h3>
+                    <div class="value">{{ "%.1f"|format(health_stats.latest_risk[1]) if health_stats.latest_risk[1] else "N/A" }}</div>
+                    <div class="unit">out of 5</div>
+                </div>
+                {% endif %}
+                {% if activity_summary and activity_summary.last_checkup %}
+                <div class="stat-card">
+                    <h3>Last Checkup</h3>
+                    <div class="value" style="font-size: 1.2em;">{{ activity_summary.last_checkup.split(' ')[0] if activity_summary.last_checkup else "Never" }}</div>
+                    <div class="unit">{{ activity_summary.last_checkup.split(' ')[1] if activity_summary.last_checkup and ' ' in activity_summary.last_checkup else "" }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('checkup') }}" class="btn btn-primary">Take New Checkup</a>
+            <a href="{{ url_for('my_reports') }}" class="btn btn-secondary">View My Reports</a>
+            <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

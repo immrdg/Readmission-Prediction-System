@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Doctor EHR Approvals</title>
+  <style>
+    body{font-family:Arial;background:#f4f7f9;margin:0;padding:20px}
+    h1{color:#0a3d62}
+    table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    th,td{padding:10px;border:1px solid #ddd;text-align:left;white-space:nowrap}
+    th{background:#0a3d62;color:#fff}
+    form.inline{display:inline}
+    button{padding:6px 12px;margin:2px;border:none;border-radius:4px;cursor:pointer}
+    .approve{background:#2e7d32;color:#fff}
+    .reject{background:#c62828;color:#fff}
+  </style>
+</head>
+<body>
+  <h1>EHR Requests Assigned To Me</h1>
+  <table>
+    <tr>
+      <th>ID</th><th>Created</th><th>Hospital</th><th>Type</th><th>Details</th>
+      <th>Status</th><th>Patient</th><th>Action</th>
+    </tr>
+    {% for r in rows %}
+      <tr>
+        <td>{{ r["ehr_id"] }}</td>
+        <td>{{ r["created_at"] }}</td>
+        <td>{{ r["hospital_name"] }}</td>
+        <td>{{ r["request_type"] }}</td>
+        <td>{{ r["details"] or '' }}</td>
+        <td>{{ r["status"] }}</td>
+        <td>{{ r["patient_user_id"] or '-' }}</td>
+        <td>
+          {% if r["status"] == 'PENDING' %}
+            <form class="inline" method="post" action="{{ url_for('doctor_ehr_action', ehr_id=r['ehr_id']) }}">
+              <input type="hidden" name="action" value="APPROVE">
+              <button class="approve" type="submit">Approve</button>
+            </form>
+            <form class="inline" method="post" action="{{ url_for('doctor_ehr_action', ehr_id=r['ehr_id']) }}">
+              <input type="hidden" name="action" value="REJECT">
+              <button class="reject" type="submit">Reject</button>
+            </form>
+          {% else %}
+            -
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
