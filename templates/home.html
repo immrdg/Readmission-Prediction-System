@@ -11,98 +11,11 @@
     <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet">
     <style>
         body {
-            font-family: "Poppins", sans-serif;
-            background-color: #eef2f7;
-            color: #333;
-            background: linear-gradient(to right, #667eea, #764ba2); /* Blue-Purple gradient */
-            transition: background-color 0.5s ease;
-        }
-
-        /* Header Styling */
-        .header_section {
-            background: rgba(20, 20, 60, 0.7); /* Deep navy with transparency */
-            padding: 5px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-        .header_section a.navbar-brand {
-            font-size: 1.6rem;
-            color: #fff;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-        .header_section a.navbar-brand:hover {
-            color: #a5f3fc; /* Light cyan hover */
-        }
-        .logout-btn {
-            background-color: #4f46e5; /* Indigo button */
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            font-size: 1.1rem;
-        }
-        .logout-btn:hover {
-            background-color: #6366f1;
-        }
-
-        /* Container and Heading */
-        .container {
-            margin-top: 120px;
-            animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 3rem;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
-        }
-        .welcome-message {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 1.5rem;
-            color: #e0e7ff;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Dashboard Boxes */
-        .dashboard-box {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            transition: all 0.3s ease-in-out;
-            background: linear-gradient(to right, #3b82f6, #9333ea); /* Blue to Violet gradient */
-            margin-bottom: 30px;
-        }
-        .dashboard-box:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-        }
-        .dashboard-box h3 {
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            font-size: 1.8rem;
-        }
-        .dashboard-box a {
-            display: block;
-            color: #f9fafb;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: color 0.3s ease-in-out;
-        }
-        .dashboard-box a:hover {
-            color: #facc15; /* Yellow hover */
+            font-family: "Inter", "Poppins", sans-serif;
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            margin: 0;
+            min-height: 100vh;
         }
 
         /* Chatbot styles */
@@ -183,73 +96,171 @@
     </style>
 </head>
 <body>
-    <header class="header_section">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg custom_nav-container">
-                <a href="{{ url_for('index') }}" class="navbar-brand">
-                    Hospital Readmission Prediction and Prevention
+    <!-- Modern Navigation -->
+    <nav class="nav-modern">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-brand">
+                <i class="fa fa-heartbeat" style="margin-right: 8px;"></i>
+                HealthGuard
+            </a>
+            <div class="nav-links">
+                <span style="color: var(--text-secondary); margin-right: var(--space-md);">Welcome, {{ name }}!</span>
+                <a href="{{ url_for('logout') }}" class="btn-modern btn-outline btn-sm">
+                    <i class="fa fa-sign-out" style="margin-right: 4px;"></i>
+                    Logout
                 </a>
-                <div class="ml-auto">
-                    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
-                </div>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <div class="container">
-        <h1>My Dashboard</h1>
-        <p class="welcome-message">Welcome Back, {{ name }}!</p>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>Risk Checkup</h3>
-                    <a href="{{ url_for('checkup') }}">Go to Risk Checkup</a>
+    <!-- Dashboard Content -->
+    <div class="dashboard-container animate-fadeIn">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title animate-fadeInUp">
+                <i class="fa fa-tachometer" style="margin-right: 12px; color: var(--primary-color);"></i>
+                My Health Dashboard
+            </h1>
+            <p class="dashboard-subtitle animate-fadeInUp" style="animation-delay: 0.2s;">
+                Monitor your health, track your progress, and stay on top of your wellness journey.
+            </p>
+        </div>
+
+        <!-- Enhanced Key Metrics -->
+        <div class="grid-modern grid-3 animate-fadeInUp" style="animation-delay: 0.4s; margin-bottom: var(--space-3xl);">
+            <div class="card-modern text-center" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0.1) 100%); border: 2px solid rgba(37, 99, 235, 0.2); padding: var(--space-xl);">
+                <div style="background: var(--gradient-primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-lg); font-size: 24px; box-shadow: var(--shadow-lg);">
+                    <i class="fa fa-heartbeat"></i>
+                </div>
+                <h3 class="card-title" style="color: var(--primary-color); margin-bottom: var(--space-md); font-size: var(--text-xl);">Health Monitoring</h3>
+                <p style="color: var(--text-secondary); font-size: var(--text-base); line-height: 1.5;">Comprehensive AI-powered health assessment and continuous monitoring system</p>
+                <div style="margin-top: var(--space-lg); padding: var(--space-md); background: rgba(37, 99, 235, 0.05); border-radius: var(--radius-lg);">
+                    <span style="color: var(--primary-color); font-weight: 700; font-size: var(--text-sm);">✓ Active Status</span>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>My Reports</h3>
-                    <a href="{{ url_for('my_reports') }}">View Reports</a>
+            
+            <div class="card-modern text-center" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid rgba(16, 185, 129, 0.2); padding: var(--space-xl);">
+                <div style="background: var(--gradient-success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-lg); font-size: 24px; box-shadow: var(--shadow-lg);">
+                    <i class="fa fa-chart-line"></i>
+                </div>
+                <h3 class="card-title" style="color: var(--secondary-color); margin-bottom: var(--space-md); font-size: var(--text-xl);">Analytics & Reports</h3>
+                <p style="color: var(--text-secondary); font-size: var(--text-base); line-height: 1.5;">Detailed health analytics with trend analysis and personalized insights</p>
+                <div style="margin-top: var(--space-lg); padding: var(--space-md); background: rgba(16, 185, 129, 0.05); border-radius: var(--radius-lg);">
+                    <span style="color: var(--secondary-color); font-weight: 700; font-size: var(--text-sm);">✓ Data Ready</span>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>Risk History</h3>
-                    <a href="{{ url_for('previous_results') }}">Check your Past History</a>
+            
+            <div class="card-modern text-center" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.1) 100%); border: 2px solid rgba(59, 130, 246, 0.2); padding: var(--space-xl);">
+                <div style="background: var(--gradient-secondary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-lg); font-size: 24px; box-shadow: var(--shadow-lg);">
+                    <i class="fa fa-brain"></i>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>Health Insights</h3>
-                    <a href="{{ url_for('analysis') }}">Dive Deep Into Analysis</a>
+                <h3 class="card-title" style="color: var(--info); margin-bottom: var(--space-md); font-size: var(--text-xl);">AI Intelligence</h3>
+                <p style="color: var(--text-secondary); font-size: var(--text-base); line-height: 1.5;">Advanced machine learning algorithms providing smart health predictions</p>
+                <div style="margin-top: var(--space-lg); padding: var(--space-md); background: rgba(59, 130, 246, 0.05); border-radius: var(--radius-lg);">
+                    <span style="color: var(--info); font-weight: 700; font-size: var(--text-sm);">✓ AI Enabled</span>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>Quick Check</h3>
-                    <a href="{{ url_for('instant_checkup') }}">Get Instant Result</a>
+
+        <!-- Main Dashboard Cards -->
+        <div class="grid-modern grid-2 animate-fadeInUp" style="animation-delay: 0.6s; gap: var(--space-2xl);">
+            <!-- Primary Risk Assessment Card -->
+            <div class="card-modern card-gradient" style="background: var(--gradient-primary); min-height: 280px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; margin-bottom: var(--space-xl);">
+                        <i class="fa fa-stethoscope" style="font-size: 32px; color: white;"></i>
+                    </div>
+                    <h3 class="card-title" style="font-size: var(--text-2xl); margin-bottom: var(--space-lg);">Comprehensive Risk Assessment</h3>
+                    <p class="card-content" style="font-size: var(--text-lg); line-height: 1.7;">Complete your detailed health evaluation using our advanced AI-powered system. Get personalized risk predictions, preventive measures, and actionable health recommendations tailored specifically for you.</p>
+                </div>
+                <div style="margin-top: var(--space-xl);">
+                    <a href="{{ url_for('checkup') }}" class="btn-modern btn-lg" style="background: rgba(255,255,255,0.9); color: var(--primary-color); border: none; font-weight: 700; width: 100%; padding: var(--space-lg);">
+                        <i class="fa fa-rocket" style="margin-right: 12px;"></i>
+                        Start Health Assessment
+                    </a>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>Diet Plan</h3>
-                    <a href="{{ url_for('diet_plan') }}">Plan a Diet</a>
+
+            <!-- Enhanced Health Reports Card -->
+            <div class="card-modern" style="min-height: 280px; display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid var(--secondary-color);">
+                <div>
+                    <div style="display: flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: var(--gradient-success); border-radius: 50%; margin-bottom: var(--space-xl);">
+                        <i class="fa fa-file-text-o" style="font-size: 32px; color: white;"></i>
+                    </div>
+                    <h3 class="card-title" style="font-size: var(--text-2xl); margin-bottom: var(--space-lg); color: var(--secondary-color);">Health Reports & Analytics</h3>
+                    <p class="card-content" style="font-size: var(--text-lg); line-height: 1.7;">Access your comprehensive health reports, track your progress over time, and view detailed analytics of your medical history. Monitor trends and get insights into your health journey.</p>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>Feedback</h3>
-                    <a href="{{ url_for('feedback') }}">Submit Feedback</a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="dashboard-box">
-                    <h3>My Profile</h3>
-                    <a href="{{ url_for('my_profile') }}">Edit My Profile</a>
+                <div style="margin-top: var(--space-xl);">
+                    <a href="{{ url_for('my_reports') }}" class="btn-modern btn-secondary btn-lg" style="width: 100%; padding: var(--space-lg); font-weight: 700;">
+                        <i class="fa fa-chart-line" style="margin-right: 12px;"></i>
+                        View My Reports
+                    </a>
                 </div>
             </div>
         </div>
+
+        <!-- Enhanced Secondary Features -->
+        <div class="grid-modern grid-3 animate-fadeInUp" style="animation-delay: 0.8s; margin-top: var(--space-3xl);">
+            <!-- Health Insights Card -->
+            <div class="card-modern" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.1) 100%); border: 2px solid var(--info); min-height: 220px;">
+                <div class="text-center" style="margin-bottom: var(--space-xl);">
+                    <div style="background: var(--gradient-secondary); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 28px;">
+                        <i class="fa fa-brain"></i>
+                    </div>
+                </div>
+                <h4 class="card-title text-center" style="font-size: var(--text-xl); margin-bottom: var(--space-md); color: var(--info);">AI Health Insights</h4>
+                <p class="card-content text-center" style="font-size: var(--text-base); margin-bottom: var(--space-lg); line-height: 1.6;">Get deep analytical insights into your health data patterns, risk factors, and personalized recommendations powered by advanced machine learning.</p>
+                <div class="text-center">
+                    <a href="{{ url_for('analysis') }}" class="btn-modern btn-outline" style="border-color: var(--info); color: var(--info); font-weight: 600;">
+                        <i class="fa fa-search" style="margin-right: 8px;"></i>
+                        Explore Insights
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile Management Card -->
+            <div class="card-modern" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(245, 158, 11, 0.1) 100%); border: 2px solid var(--accent-color); min-height: 220px;">
+                <div class="text-center" style="margin-bottom: var(--space-xl);">
+                    <div style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 28px;">
+                        <i class="fa fa-user-circle"></i>
+                    </div>
+                </div>
+                <h4 class="card-title text-center" style="font-size: var(--text-xl); margin-bottom: var(--space-md); color: var(--accent-color);">Profile Management</h4>
+                <p class="card-content text-center" style="font-size: var(--text-base); margin-bottom: var(--space-lg); line-height: 1.6;">Manage your personal information, update health preferences, and customize your dashboard experience to suit your needs.</p>
+                <div class="text-center">
+                    <a href="{{ url_for('my_profile') }}" class="btn-modern btn-outline" style="border-color: var(--accent-color); color: var(--accent-color); font-weight: 600;">
+                        <i class="fa fa-edit" style="margin-right: 8px;"></i>
+                        Edit Profile
+                    </a>
+                </div>
+            </div>
+
+            <!-- Support & Feedback Card -->
+            <div class="card-modern" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.1) 100%); border: 2px solid var(--error); min-height: 220px;">
+                <div class="text-center" style="margin-bottom: var(--space-xl);">
+                    <div style="background: linear-gradient(135deg, #ef4444 0%, #f87171 100%); color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 28px;">
+                        <i class="fa fa-life-ring"></i>
+                    </div>
+                </div>
+                <h4 class="card-title text-center" style="font-size: var(--text-xl); margin-bottom: var(--space-md); color: var(--error);">Support & Feedback</h4>
+                <p class="card-content text-center" style="font-size: var(--text-base); margin-bottom: var(--space-lg); line-height: 1.6;">Need help or want to share your experience? Get support from our team or provide valuable feedback to improve our services.</p>
+                <div class="text-center">
+                    <a href="{{ url_for('feedback') }}" class="btn-modern btn-outline" style="border-color: var(--error); color: var(--error); font-weight: 600;">
+                        <i class="fa fa-comment" style="margin-right: 8px;"></i>
+                        Get Support
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="card-modern animate-fadeInUp" style="animation-delay: 1s; margin-top: var(--space-2xl); text-align: center; background: var(--background-primary); border: 2px dashed var(--border-color);">
+            <h3 style="color: var(--text-primary); margin-bottom: var(--space-md);">Need Help?</h3>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);">Have questions about your health assessment or need assistance navigating the platform?</p>
+            <a href="{{ url_for('feedback') }}" class="btn-modern btn-primary">
+                <i class="fa fa-comment" style="margin-right: 8px;"></i>
+                Contact Support
+            </a>
+        </div>
+    </div>
 </body>
 </html>

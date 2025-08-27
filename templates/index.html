@@ -1,31 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link rel="icon" href="{{ url_for('static', filename='images/main.jpg') }}" type="image/gif" />
-  <title>Hospital Readmission Prediction and Prevention</title>
+  <title>HealthGuard - Hospital Readmission Prediction and Prevention</title>
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
   <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet"/>
   <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
   <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet"/>
-  
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  
-    <!-- Favicon -->
-    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png" />
-    
-    <title>Health-Check</title>
-  
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
-    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet"/>
   
     <style>
       .register-btn {
@@ -61,135 +46,187 @@
 
 
 
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-    }
-
-    .navbar-nav .nav-item {
-      margin-right: 20px;
-    }
-
-    .navbar-nav .nav-link {
-      font-size: 18px;
-      color: #ffffff;
-      padding: 10px 15px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .navbar-nav .nav-link:hover {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .register-btn {
-      background-color: #28a745;
-      color: white;
-      padding: 10px 20px;
-      font-size: 18px;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      display: inline-block;
-      margin-top: 20px;
-    }
-
-    .register-btn:hover {
-      background-color: #218838;
-      color: white;
-    }
-
-    .detail-box h1 {
-      font-size: 48px;
-      font-family: 'Georgia', serif;
-      letter-spacing: 2px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      white-space: nowrap;
-      margin-bottom: 10px;
-    }
-
-    .detail-box {
-      text-align: center;
-      margin-top: -50px;
-    }
-
-    .detail-box p {
-      font-size: 20px;
-      font-family: 'Georgia', serif;
-      letter-spacing: 1px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      margin-right: 16px;
-      margin-bottom: 10px;
-      white-space: nowrap;
-      text-align: right;
-      padding-right: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .detail-box {
-        text-align: center;
-        margin-top: 0;
-      }
-      .detail-box p {
-        padding-right: 0;
-      }
-    }
-  </style>
 </head>
 
 <body>
-  <header class="header_section">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a href="{{ url_for('index') }}" class="navbar-brand">
-          <span>Hospital Readmission Prediction and Prevention</span>
+  <!-- Modern Navigation -->
+  <nav class="nav-modern">
+    <div class="nav-container">
+      <a href="{{ url_for('index') }}" class="nav-brand">
+        <i class="fa fa-heartbeat" style="margin-right: 8px;"></i>
+        HealthGuard
+      </a>
+      <div class="nav-links mobile-hide">
+        <a href="{{ url_for('hospital_login') }}" class="nav-link">
+          <i class="fa fa-hospital-o" style="margin-right: 4px;"></i>
+          Hospital Login
         </a>
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('hospital_login') }}">Hospital Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('doctor_login') }}">Doctor Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('login') }}">PSS Login</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        <a href="{{ url_for('doctor_login') }}" class="nav-link">
+          <i class="fa fa-user-md" style="margin-right: 4px;"></i>
+          Doctor Login
+        </a>
+        <a href="{{ url_for('login') }}" class="btn-modern btn-outline btn-sm">
+          <i class="fa fa-sign-in" style="margin-right: 4px;"></i>
+          Patient Login
+        </a>
+      </div>
     </div>
-  </header>
-  <!-- End of header section -->
+  </nav>
 
-  <!-- slider section -->
-  <section class="slider_section position-relative">
-    <div class="slider_bg_box">
-      <img src="{{ url_for('static', filename='images/c2.png') }}" alt="">
+  <!-- Modern Hero Section -->
+  <section class="hero-modern animate-fadeIn">
+    <div class="hero-background">
+      <img src="https://i.pinimg.com/1200x/5e/37/94/5e3794e839e66d68ffac7d47147df042.jpg" alt="Healthcare Background">
     </div>
-    <div class="slider_bg"></div>
-    <div class="container">
-      <div class="col-md-6 ml-auto">
-        <div class="detail-box">
-          <h1>Smart Risk Prediction</h1>
-          <p>Your Health, Our Priority – Predicting Risks, Ensuring Care</p>
-          <a href="{{ url_for('register') }}" class="register-btn">Register Now</a>
+    <div class="hero-content" >
+      <h1 class="hero-title animate-fadeInUp">
+        Readmission Prediction System
+      </h1>
+      <p class="hero-subtitle animate-fadeInUp" style="animation-delay: 0.2s;">
+        Advanced AI-powered hospital readmission prediction to ensure better patient care and reduce healthcare costs.
+      </p>
+      <div class="animate-fadeInUp" style="animation-delay: 0.4s; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('register') }}" class="btn-modern btn-primary btn-lg">
+          <i class="fa fa-user-plus" style="margin-right: 8px;"></i>
+          Get Started
+        </a>
+        <a href="#features" class="btn-modern btn-outline btn-lg" style="color: white; border-color: white;">
+          <i class="fa fa-info-circle" style="margin-right: 8px;"></i>
+          Learn More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" style="padding: var(--space-3xl) 0; background: var(--background-secondary);">
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h2 class="dashboard-title">Why Choose HealthGuard?</h2>
+        <p class="dashboard-subtitle">
+          Our AI-powered platform provides comprehensive health risk assessment and personalized care recommendations.
+        </p>
+      </div>
+      
+      <div class="grid-modern grid-3">
+        <div class="card-modern animate-fadeInUp">
+          <div style="text-align: center; margin-bottom: var(--space-lg);">
+            <div style="background: var(--gradient-primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 24px;">
+              <i class="fa fa-brain"></i>
+            </div>
+          </div>
+          <h3 class="card-title text-center">AI-Powered Analysis</h3>
+          <p class="card-content text-center">
+            Advanced machine learning algorithms analyze multiple health parameters to predict readmission risks with high accuracy.
+          </p>
+        </div>
+        
+        <div class="card-modern animate-fadeInUp" style="animation-delay: 0.2s;">
+          <div style="text-align: center; margin-bottom: var(--space-lg);">
+            <div style="background: var(--gradient-success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 24px;">
+              <i class="fa fa-shield"></i>
+            </div>
+          </div>
+          <h3 class="card-title text-center">Preventive Care</h3>
+          <p class="card-content text-center">
+            Get personalized recommendations for diet, lifestyle changes, and preventive measures to maintain optimal health.
+          </p>
+        </div>
+        
+        <div class="card-modern animate-fadeInUp" style="animation-delay: 0.4s;">
+          <div style="text-align: center; margin-bottom: var(--space-lg);">
+            <div style="background: var(--gradient-secondary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 24px;">
+              <i class="fa fa-users"></i>
+            </div>
+          </div>
+          <h3 class="card-title text-center">Multi-User Platform</h3>
+          <p class="card-content text-center">
+            Seamless integration for patients, doctors, and hospitals with role-based access and comprehensive reporting.
+          </p>
         </div>
       </div>
     </div>
   </section>
-  <!-- End of slider section -->
 
-  <!-- Special section -->
-  
-  <!-- End of special section -->
+  <!-- Stats Section -->
+  <section style="padding: var(--space-3xl) 0; background: var(--gradient-primary); color: white;">
+    <div class="dashboard-container">
+      <div class="grid-modern grid-4">
+        <div class="text-center animate-fadeInUp">
+          <div style="font-size: var(--text-4xl); font-weight: 700; margin-bottom: var(--space-sm);">98%</div>
+          <div style="font-size: var(--text-lg); opacity: 0.9;">Prediction Accuracy</div>
+        </div>
+        <div class="text-center animate-fadeInUp" style="animation-delay: 0.1s;">
+          <div style="font-size: var(--text-4xl); font-weight: 700; margin-bottom: var(--space-sm);">50K+</div>
+          <div style="font-size: var(--text-lg); opacity: 0.9;">Patients Served</div>
+        </div>
+        <div class="text-center animate-fadeInUp" style="animation-delay: 0.2s;">
+          <div style="font-size: var(--text-4xl); font-weight: 700; margin-bottom: var(--space-sm);">24/7</div>
+          <div style="font-size: var(--text-lg); opacity: 0.9;">Health Monitoring</div>
+        </div>
+        <div class="text-center animate-fadeInUp" style="animation-delay: 0.3s;">
+          <div style="font-size: var(--text-4xl); font-weight: 700; margin-bottom: var(--space-sm);">35%</div>
+          <div style="font-size: var(--text-lg); opacity: 0.9;">Readmission Reduction</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- about section -->
-  
-  <!-- End of about us page -->
+  <!-- CTA Section -->
+  <section style="padding: var(--space-3xl) 0; background: var(--background-primary);">
+    <div class="dashboard-container text-center">
+      <h2 class="dashboard-title animate-fadeInUp">Ready to Take Control of Your Health?</h2>
+      <p class="dashboard-subtitle animate-fadeInUp" style="animation-delay: 0.2s; margin-bottom: var(--space-2xl);">
+        Join thousands of patients who trust HealthGuard for their health risk assessment and preventive care.
+      </p>
+      <div class="animate-fadeInUp" style="animation-delay: 0.4s;">
+        <a href="{{ url_for('register') }}" class="btn-modern btn-primary btn-lg">
+          <i class="fa fa-rocket" style="margin-right: 8px;"></i>
+          Start Your Health Journey
+        </a>
+      </div>
+    </div>
+  </section>
 
-  <!-- end of footer section -->
+  <!-- Modern Footer -->
+  <footer style="background: var(--text-primary); color: white; padding: var(--space-2xl) 0;">
+    <div class="dashboard-container">
+      <div class="grid-modern grid-4">
+        <div>
+          <h4 style="font-family: 'Playfair Display', serif; margin-bottom: var(--space-lg); color: var(--accent-light);">HealthGuard</h4>
+          <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.6;">Advanced AI-powered healthcare solutions for better patient outcomes and reduced readmission rates.</p>
+        </div>
+        <div>
+          <h5 style="margin-bottom: var(--space-lg);">Quick Links</h5>
+          <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+            <a href="{{ url_for('register') }}" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color var(--transition-base);">Patient Registration</a>
+            <a href="{{ url_for('doctor_login') }}" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color var(--transition-base);">Doctor Portal</a>
+            <a href="{{ url_for('hospital_login') }}" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color var(--transition-base);">Hospital Dashboard</a>
+          </div>
+        </div>
+        <div>
+          <h5 style="margin-bottom: var(--space-lg);">Services</h5>
+          <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+            <span style="color: rgba(255, 255, 255, 0.8);">Risk Assessment</span>
+            <span style="color: rgba(255, 255, 255, 0.8);">Health Monitoring</span>
+            <span style="color: rgba(255, 255, 255, 0.8);">Preventive Care</span>
+            <span style="color: rgba(255, 255, 255, 0.8);">Analytics & Reports</span>
+          </div>
+        </div>
+        <div>
+          <h5 style="margin-bottom: var(--space-lg);">Contact Info</h5>
+          <div style="display: flex; flex-direction: column; gap: var(--space-sm); color: rgba(255, 255, 255, 0.8);">
+            <div><i class="fa fa-phone" style="margin-right: 8px;"></i> +1 (555) 123-4567</div>
+            <div><i class="fa fa-envelope" style="margin-right: 8px;"></i> info@healthguard.com</div>
+            <div><i class="fa fa-map-marker" style="margin-right: 8px;"></i> 123 Healthcare Ave</div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: var(--space-2xl); padding-top: var(--space-lg); text-align: center; color: rgba(255, 255, 255, 0.6);">
+        <p>&copy; 2024 HealthGuard. All rights reserved. | Advanced Healthcare Risk Prediction Platform</p>
+      </div>
+    </div>
+  </footer>
 
   <!-- jQery -->
   <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>

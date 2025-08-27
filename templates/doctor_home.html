@@ -1,18 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>Doctor Home</title>
-  <style>
-    body{font-family:Arial;background:#f4f7f9;margin:0;padding:20px}
-    h1{color:#0a3d62}
-    a{display:inline-block;margin:10px 10px 0 0;padding:10px 18px;background:#0a3d62;color:#fff;text-decoration:none;border-radius:6px}
-    a:hover{background:#073d52}
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="{{ url_for('static', filename='images/main.jpg') }}" type="image/gif">
+  <title>Doctor Dashboard - HealthGuard</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet">
 </head>
 <body>
-  <h1>Welcome, Dr. {{ doctor_name }}</h1>
-  <a href="{{ url_for('doctor_reports') }}">View Patient Reports</a>
-  <a href="{{ url_for('doctor_logout') }}">Logout</a>
+  <!-- Modern Navigation -->
+  <nav class="nav-modern">
+    <div class="nav-container">
+      <a href="{{ url_for('index') }}" class="nav-brand">
+        <i class="fa fa-heartbeat" style="margin-right: 8px;"></i>
+        HealthGuard
+      </a>
+      <div class="nav-links">
+        <span style="color: var(--text-secondary); margin-right: var(--space-md);">Dr. {{ doctor_name }}</span>
+        <a href="{{ url_for('doctor_logout') }}" class="btn-modern btn-outline btn-sm">
+          <i class="fa fa-sign-out" style="margin-right: 4px;"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-container animate-fadeIn">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title animate-fadeInUp">
+        <i class="fa fa-user-md" style="margin-right: 12px; color: var(--primary-color);"></i>
+        Doctor Dashboard
+      </h1>
+      <p class="dashboard-subtitle animate-fadeInUp" style="animation-delay: 0.2s;">
+        Welcome, Dr. {{ doctor_name }}! Monitor patient health and manage readmission risks.
+      </p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid-modern grid-4 animate-fadeInUp" style="animation-delay: 0.4s; margin-bottom: var(--space-3xl);">
+      <div class="card-modern text-center">
+        <div style="background: var(--gradient-primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md); font-size: 20px;">
+          <i class="fa fa-users"></i>
+        </div>
+        <h3 class="card-title" style="color: var(--primary-color); margin-bottom: var(--space-sm);">Total Patients</h3>
+        <p style="color: var(--text-secondary); font-size: var(--text-sm);">Under Care</p>
+      </div>
+      <div class="card-modern text-center">
+        <div style="background: var(--gradient-success); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md); font-size: 20px;">
+          <i class="fa fa-check-circle"></i>
+        </div>
+        <h3 class="card-title" style="color: var(--secondary-color); margin-bottom: var(--space-sm);">Low Risk</h3>
+        <p style="color: var(--text-secondary); font-size: var(--text-sm);">Stable Patients</p>
+      </div>
+      <div class="card-modern text-center">
+        <div style="background: var(--gradient-secondary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md); font-size: 20px;">
+          <i class="fa fa-exclamation-triangle"></i>
+        </div>
+        <h3 class="card-title" style="color: var(--warning); margin-bottom: var(--space-sm);">High Risk</h3>
+        <p style="color: var(--text-secondary); font-size: var(--text-sm);">Need Attention</p>
+      </div>
+      <div class="card-modern text-center">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md); font-size: 20px;">
+          <i class="fa fa-file-text-o"></i>
+        </div>
+        <h3 class="card-title" style="color: var(--info); margin-bottom: var(--space-sm);">Reports</h3>
+        <p style="color: var(--text-secondary); font-size: var(--text-sm);">Recent Activity</p>
+      </div>
+    </div>
+
+    <!-- Main Action Cards -->
+    <div class="grid-modern grid-2 animate-fadeInUp" style="animation-delay: 0.6s;">
+      <!-- Patient Reports -->
+      <div class="card-modern card-gradient" style="background: var(--gradient-primary);">
+        <div style="display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; margin-bottom: var(--space-lg);">
+          <i class="fa fa-clipboard" style="font-size: 24px; color: white;"></i>
+        </div>
+        <h3 class="card-title">Patient Reports</h3>
+        <p class="card-content">View comprehensive patient health reports, risk assessments, and readmission predictions.</p>
+        <a href="{{ url_for('doctor_reports') }}" class="btn-modern" style="background: rgba(255,255,255,0.2); color: white; border-color: rgba(255,255,255,0.3);">
+          <i class="fa fa-eye" style="margin-right: 8px;"></i>
+          View All Reports
+        </a>
+      </div>
+
+      <!-- Analytics Dashboard -->
+      <div class="card-modern">
+        <div style="display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; background: var(--gradient-success); border-radius: 50%; margin-bottom: var(--space-lg);">
+          <i class="fa fa-line-chart" style="font-size: 24px; color: white;"></i>
+        </div>
+        <h3 class="card-title">Analytics & Trends</h3>
+        <p class="card-content">Analyze patient trends, monitor outcomes, and track the effectiveness of treatments.</p>
+        <a href="#" class="btn-modern btn-secondary">
+          <i class="fa fa-bar-chart" style="margin-right: 8px;"></i>
+          View Analytics
+        </a>
+      </div>
+    </div>
+
+    <!-- Additional Features -->
+    <div class="grid-modern grid-3 animate-fadeInUp" style="animation-delay: 0.8s; margin-top: var(--space-2xl);">
+      <div class="card-modern">
+        <div class="text-center" style="margin-bottom: var(--space-lg);">
+          <div style="background: var(--gradient-primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 18px;">
+            <i class="fa fa-search"></i>
+          </div>
+        </div>
+        <h4 class="card-title text-center" style="font-size: var(--text-lg);">Search Patients</h4>
+        <p class="card-content text-center" style="font-size: var(--text-sm); margin-bottom: var(--space-md);">Find specific patient records quickly.</p>
+        <a href="#" class="btn-modern btn-outline w-full btn-sm">
+          <i class="fa fa-search" style="margin-right: 4px;"></i>
+          Search
+        </a>
+      </div>
+
+      <div class="card-modern">
+        <div class="text-center" style="margin-bottom: var(--space-lg);">
+          <div style="background: var(--gradient-success); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 18px;">
+            <i class="fa fa-bell"></i>
+          </div>
+        </div>
+        <h4 class="card-title text-center" style="font-size: var(--text-lg);">Alerts</h4>
+        <p class="card-content text-center" style="font-size: var(--text-sm); margin-bottom: var(--space-md);">Critical patient notifications.</p>
+        <a href="#" class="btn-modern btn-outline w-full btn-sm">
+          <i class="fa fa-bell" style="margin-right: 4px;"></i>
+          View Alerts
+        </a>
+      </div>
+
+      <div class="card-modern">
+        <div class="text-center" style="margin-bottom: var(--space-lg);">
+          <div style="background: var(--gradient-secondary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 18px;">
+            <i class="fa fa-cog"></i>
+          </div>
+        </div>
+        <h4 class="card-title text-center" style="font-size: var(--text-lg);">Settings</h4>
+        <p class="card-content text-center" style="font-size: var(--text-sm); margin-bottom: var(--space-md);">Manage your preferences.</p>
+        <a href="#" class="btn-modern btn-outline w-full btn-sm">
+          <i class="fa fa-cog" style="margin-right: 4px;"></i>
+          Configure
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Access Section -->
+    <div class="card-modern animate-fadeInUp" style="animation-delay: 1s; margin-top: var(--space-2xl); text-align: center; background: var(--background-primary); border: 2px solid var(--primary-color); border-style: dashed;">
+      <h3 style="color: var(--primary-color); margin-bottom: var(--space-md);">Need Quick Access?</h3>
+      <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);">Access frequently used features and emergency protocols for immediate patient care.</p>
+      <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+        <a href="#" class="btn-modern btn-primary btn-sm">
+          <i class="fa fa-ambulance" style="margin-right: 4px;"></i>
+          Emergency Protocol
+        </a>
+        <a href="#" class="btn-modern btn-outline btn-sm">
+          <i class="fa fa-phone" style="margin-right: 4px;"></i>
+          Contact Support
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

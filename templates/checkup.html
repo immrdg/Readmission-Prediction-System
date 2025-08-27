@@ -1,257 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Risk Checkup</title>
+  <link rel="icon" href="{{ url_for('static', filename='images/main.jpg') }}" type="image/gif">
+  <title>Health Risk Assessment - HealthGuard</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5f7fa;
+      font-family: "Inter", "Poppins", sans-serif;
+      background: var(--background-secondary);
+      color: var(--text-primary);
       margin: 0;
-      padding: 0;
+      min-height: 100vh;
     }
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #1e88e5;
-      padding: 15px 30px;
-      color: white;
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--border-light);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-2xl);
+      overflow: hidden;
     }
 
-    .navbar a {
-      color: white;
-      text-decoration: none;
-      font-size: 18px;
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-full);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .form-section {
+      background: var(--background-primary);
+      padding: var(--space-xl);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-md);
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .section-title {
+      font-size: var(--text-xl);
       font-weight: 600;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background: #ffffff;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    }
-
-    .container h1 {
-      text-align: center;
-      color: #1e88e5;
-      margin-bottom: 30px;
-      font-size: 26px;
+      color: var(--primary-color);
+      margin-bottom: var(--space-lg);
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
     }
 
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px 30px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
     }
 
     .form-group label {
-      display: block;
-      margin-bottom: 6px;
       font-weight: 600;
-      color: #333;
+      color: var(--text-primary);
+      font-size: var(--text-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
     }
 
     .form-group input,
     .form-group select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      background: #fdfdfd;
-      transition: 0.2s;
+      padding: var(--space-md);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-base);
+      transition: all var(--transition-base);
+      background: white;
     }
 
     .form-group input:focus,
     .form-group select:focus {
-      border-color: #1e88e5;
       outline: none;
-      box-shadow: 0 0 5px rgba(30, 136, 229, 0.4);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
-    .form-group button {
-      grid-column: 1 / -1;
-      padding: 14px;
-      background-color: #1e88e5;
+    .form-group input::placeholder {
+      color: var(--text-light);
+    }
+
+    .help-text {
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      margin-top: calc(-1 * var(--space-xs));
+    }
+
+    .submit-section {
+      text-align: center;
+      margin-top: var(--space-2xl);
+      padding: var(--space-xl);
+      background: var(--background-primary);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .icon-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: white;
-      font-size: 17px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .form-group button:hover {
-      background-color: #1565c0;
-    }
-
-    .claims-container {
-      grid-column: 1 / -1;
-      margin-top: 15px;
+      font-size: 18px;
     }
   </style>
 </head>
 
 <body>
-  <div class="navbar">
-    <a href="/">Riskometer</a>
-    <a href="/home">Home</a>
-  </div>
+  <!-- Modern Navigation -->
+  <nav class="nav-modern">
+    <div class="nav-container">
+      <a href="/" class="nav-brand">
+        <i class="fa fa-heartbeat" style="margin-right: 8px;"></i>
+        HealthGuard
+      </a>
+      <div class="nav-links">
+        <a href="/home" class="nav-link">
+          <i class="fa fa-home" style="margin-right: 4px;"></i>
+          Dashboard
+        </a>
+      </div>
+    </div>
+  </nav>
 
-  <div class="container">
-    <h1>Risk Checkup</h1>
-    <form action="/predict" method="POST" class="form-grid">
+  <!-- Main Content -->
+  <div class="dashboard-container animate-fadeIn">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title animate-fadeInUp">
+        <i class="fa fa-stethoscope" style="margin-right: 12px; color: var(--primary-color);"></i>
+        Health Risk Assessment
+      </h1>
+      <p class="dashboard-subtitle animate-fadeInUp" style="animation-delay: 0.2s;">
+        Complete your comprehensive health evaluation to receive personalized risk predictions and recommendations.
+      </p>
+    </div>
 
-      <!-- Patient Demographics -->
-      <div class="form-group">
-        <label for="age">Age</label>
-        <input type="number" name="age" id="age" required>
+    <!-- Progress Bar -->
+    <div class="progress-bar animate-fadeInUp" style="animation-delay: 0.4s;">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <form action="/predict" method="POST" id="healthForm" class="animate-fadeInUp" style="animation-delay: 0.6s;">
+      <!-- Demographics Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <div class="icon-circle">
+            <i class="fa fa-user"></i>
+          </div>
+          Personal Information
+        </h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="age">
+              <i class="fa fa-birthday-cake"></i>
+              Age
+            </label>
+            <input type="number" name="age" id="age" placeholder="Enter your age" required min="1" max="120">
+            <span class="help-text">Your current age in years</span>
+          </div>
+          <div class="form-group">
+            <label for="gender">
+              <i class="fa fa-venus-mars"></i>
+              Gender
+            </label>
+            <select name="gender" id="gender" required>
+              <option value="">Select gender</option>
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="gender">Gender</label>
-        <select name="gender" id="gender" required>
-          <option value="1">Male</option>
-          <option value="0">Female</option>
-        </select>
+      <!-- Vital Signs Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <div class="icon-circle">
+            <i class="fa fa-heartbeat"></i>
+          </div>
+          Vital Signs & Lab Results
+        </h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="systole">
+              <i class="fa fa-tint"></i>
+              Systolic Blood Pressure
+            </label>
+            <input type="number" name="systole" id="systole" placeholder="e.g., 120" required>
+            <span class="help-text">Normal: Less than 120 mmHg</span>
+          </div>
+          <div class="form-group">
+            <label for="diastole">
+              <i class="fa fa-tint"></i>
+              Diastolic Blood Pressure
+            </label>
+            <input type="number" name="diastole" id="diastole" placeholder="e.g., 80" required>
+            <span class="help-text">Normal: 60-79 mmHg</span>
+          </div>
+          <div class="form-group">
+            <label for="heart_rate">
+              <i class="fa fa-heartbeat"></i>
+              Heart Rate
+            </label>
+            <input type="number" name="heart_rate" id="heart_rate" placeholder="e.g., 75" required>
+            <span class="help-text">Normal: 60-100 bpm</span>
+          </div>
+          <div class="form-group">
+            <label for="bmi">
+              <i class="fa fa-calculator"></i>
+              BMI
+            </label>
+            <input type="number" step="0.1" name="bmi" id="bmi" placeholder="e.g., 22.5" required>
+            <span class="help-text">Normal: 18.5-24.9</span>
+          </div>
+          <div class="form-group">
+            <label for="blood_sugar">
+              <i class="fa fa-flask"></i>
+              Blood Sugar Level
+            </label>
+            <input type="number" step="0.01" name="blood_sugar" id="blood_sugar" placeholder="e.g., 85" required>
+            <span class="help-text">Normal: 72-99 mg/dL</span>
+          </div>
+          <div class="form-group">
+            <label for="cholesterol">
+              <i class="fa fa-flask"></i>
+              Cholesterol
+            </label>
+            <input type="number" step="0.01" name="cholesterol" id="cholesterol" placeholder="e.g., 180" required>
+            <span class="help-text">Total cholesterol in mg/dL</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Clinical Features -->
-      <div class="form-group">
-        <label for="rbc_count">RBC Count (3 - 8 mcL)</label>
-        <input type="number" step="0.01" name="rbc_count" id="rbc_count" required>
+      <!-- Blood Work Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <div class="icon-circle">
+            <i class="fa fa-medkit"></i>
+          </div>
+          Blood Work & Tests
+        </h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="rbc_count">
+              <i class="fa fa-tint"></i>
+              RBC Count
+            </label>
+            <input type="number" step="0.01" name="rbc_count" id="rbc_count" placeholder="e.g., 4.5" required>
+            <span class="help-text">Normal: 3-8 mcL</span>
+          </div>
+          <div class="form-group">
+            <label for="wbc_count">
+              <i class="fa fa-shield"></i>
+              WBC Count
+            </label>
+            <input type="number" step="0.01" name="wbc_count" id="wbc_count" placeholder="e.g., 7000" required>
+            <span class="help-text">Normal: 4000-11000</span>
+          </div>
+          <div class="form-group">
+            <label for="glucose_mean">
+              <i class="fa fa-flask"></i>
+              Glucose Level
+            </label>
+            <input type="number" step="0.01" name="glucose_mean" id="glucose_mean" placeholder="e.g., 90" required>
+            <span class="help-text">Average glucose in mg/dL</span>
+          </div>
+          <div class="form-group">
+            <label for="hemoglobin_mean">
+              <i class="fa fa-tint"></i>
+              Hemoglobin Level
+            </label>
+            <input type="number" step="0.01" name="hemoglobin_mean" id="hemoglobin_mean" placeholder="e.g., 14" required>
+            <span class="help-text">Hemoglobin in g/dL</span>
+          </div>
+          <div class="form-group">
+            <label for="allergies">
+              <i class="fa fa-exclamation-triangle"></i>
+              Allergies
+            </label>
+            <select name="allergies" id="allergies" required>
+              <option value="">Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="wbc_count">WBC Count (4000 - 11000)</label>
-        <input type="number" step="0.01" name="wbc_count" id="wbc_count" required>
+      <!-- Lifestyle Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <div class="icon-circle">
+            <i class="fa fa-heart"></i>
+          </div>
+          Lifestyle & Habits
+        </h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="steps_per_day">
+              <i class="fa fa-walking"></i>
+              Steps Per Day
+            </label>
+            <input type="number" name="steps_per_day" id="steps_per_day" placeholder="e.g., 8000" required>
+            <span class="help-text">Average daily step count</span>
+          </div>
+          <div class="form-group">
+            <label for="calorie_intake">
+              <i class="fa fa-cutlery"></i>
+              Daily Calorie Intake
+            </label>
+            <input type="number" name="calorie_intake" id="calorie_intake" placeholder="e.g., 2000" required>
+            <span class="help-text">Average calories per day</span>
+          </div>
+          <div class="form-group">
+            <label for="smoking">
+              <i class="fa fa-ban"></i>
+              Smoking
+            </label>
+            <select name="smoking" id="smoking" required>
+              <option value="">Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="alcohol">
+              <i class="fa fa-glass"></i>
+              Alcohol Consumption
+            </label>
+            <select name="alcohol" id="alcohol" required>
+              <option value="">Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sleep_pattern">
+              <i class="fa fa-moon-o"></i>
+              Sleep Pattern
+            </label>
+            <select name="sleep_pattern" id="sleep_pattern" required>
+              <option value="">Select pattern</option>
+              <option value="1">Good (7-9 hours)</option>
+              <option value="0">Poor (Less than 7 hours)</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="systole">Systolic Blood Pressure (&lt;120 mmHg)</label>
-        <input type="number" name="systole" id="systole" required>
+      <!-- Medical History Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <div class="icon-circle">
+            <i class="fa fa-clipboard"></i>
+          </div>
+          Medical History & Claims
+        </h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="num_claims">
+              <i class="fa fa-file-text-o"></i>
+              Number of Claims
+            </label>
+            <input type="number" name="num_claims" id="num_claims" placeholder="e.g., 2" required min="0" max="10">
+            <span class="help-text">Insurance claims in past year</span>
+          </div>
+          <div class="form-group">
+            <label for="service_type">
+              <i class="fa fa-hospital-o"></i>
+              Service Type
+            </label>
+            <input type="text" name="service_type" id="service_type" placeholder="e.g., consultation, surgery" required>
+            <span class="help-text">Type of medical service received</span>
+          </div>
+          <div class="form-group">
+            <label for="diagnosis_code">
+              <i class="fa fa-code"></i>
+              Diagnosis Code
+            </label>
+            <input type="text" name="diagnosis_code" id="diagnosis_code" placeholder="e.g., F32, M79" required>
+            <span class="help-text">ICD diagnosis code</span>
+          </div>
+          <div class="form-group">
+            <label for="procedure_code">
+              <i class="fa fa-cogs"></i>
+              Procedure Code
+            </label>
+            <select name="procedure_code" id="procedure_code" required>
+              <option value="">Select procedure</option>
+              <option value="P01">P01 (Routine Blood Test)</option>
+              <option value="P02">P02 (Physical Exam)</option>
+              <option value="P03">P03 (X-Ray Imaging)</option>
+              <option value="P04">P04 (Minor Surgery)</option>
+              <option value="P05">P05 (Major Surgery)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cost_of_service">
+              <i class="fa fa-dollar"></i>
+              Cost of Service
+            </label>
+            <input type="number" step="0.01" name="cost_of_service" id="cost_of_service" placeholder="e.g., 250.00" required>
+            <span class="help-text">Total cost in USD</span>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="diastole">Diastolic Blood Pressure (60-79 mmHg)</label>
-        <input type="number" name="diastole" id="diastole" required>
-      </div>
-
-      <div class="form-group">
-        <label for="heart_rate">Heart Rate (60 - 100 bpm)</label>
-        <input type="number" name="heart_rate" id="heart_rate" required>
-      </div>
-
-      <div class="form-group">
-        <label for="allergies">Allergies</label>
-        <select name="allergies" id="allergies" required>
-          <option value="1">Yes</option>
-          <option value="0">No</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="blood_sugar">Blood Sugar Level (72 - 99 mg/dL)</label>
-        <input type="number" step="0.01" name="blood_sugar" id="blood_sugar" required>
-      </div>
-
-      <div class="form-group">
-        <label for="bmi">BMI (18.5 - 24.9)</label>
-        <input type="number" step="0.01" name="bmi" id="bmi" required>
-      </div>
-
-      <div class="form-group">
-        <label for="cholesterol">Cholesterol (mg/dL)</label>
-        <input type="number" step="0.01" name="cholesterol" id="cholesterol" required>
-      </div>
-
-      <div class="form-group">
-        <label for="glucose_mean">Glucose Level (mg/dL)</label>
-        <input type="number" step="0.01" name="glucose_mean" id="glucose_mean" required>
-      </div>
-
-      <div class="form-group">
-        <label for="hemoglobin_mean">Hemoglobin Level (g/dL)</label>
-        <input type="number" step="0.01" name="hemoglobin_mean" id="hemoglobin_mean" required>
-      </div>
-
-      <!-- Lifestyle -->
-      <div class="form-group">
-        <label for="steps_per_day">Steps Per Day</label>
-        <input type="number" name="steps_per_day" id="steps_per_day" required>
-      </div>
-
-      <div class="form-group">
-        <label for="calorie_intake">Calorie Intake</label>
-        <input type="number" name="calorie_intake" id="calorie_intake" required>
-      </div>
-
-      <div class="form-group">
-        <label for="smoking">Smoking</label>
-        <select name="smoking" id="smoking" required>
-          <option value="1">Yes</option>
-          <option value="0">No</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="alcohol">Alcohol</label>
-        <select name="alcohol" id="alcohol" required>
-          <option value="1">Yes</option>
-          <option value="0">No</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="sleep_pattern">Sleep Pattern</label>
-        <select name="sleep_pattern" id="sleep_pattern" required>
-          <option value="1">Good</option>
-          <option value="0">Poor</option>
-        </select>
-      </div>
-
-      <!-- Claims -->
-      <div class="form-group">
-        <label for="num_claims">Number of Claims</label>
-        <input type="number" name="num_claims" id="num_claims" required min="0" max="10">
-      </div>
-
-      <div class="form-group">
-        <label for="service_type">Service Type</label>
-        <input type="text" name="service_type" id="service_type" placeholder="e.g. surgery" required>
-      </div>
-
-      <div class="form-group">
-        <label for="diagnosis_code">Diagnosis Code</label>
-        <input type="text" name="diagnosis_code" id="diagnosis_code" placeholder="e.g. F32" required>
-      </div>
-
-      <div class="form-group">
-        <label for="procedure_code">Procedure Code</label>
-        <select name="procedure_code" id="procedure_code" required>
-          <option value="P01">P01 (Routine Blood Test)</option>
-          <option value="P02">P02 (Physical Exam)</option>
-          <option value="P03">P03 (X-Ray Imaging)</option>
-          <option value="P04">P04 (Minor Surgery)</option>
-          <option value="P05">P05 (Major Surgery)</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="cost_of_service">Cost of Service ($)</label>
-        <input type="number" step="0.01" name="cost_of_service" id="cost_of_service" required>
-      </div>
-
-      <div class="form-group">
-        <button type="submit">Submit</button>
+      <!-- Submit Section -->
+      <div class="submit-section">
+        <h3 style="color: var(--primary-color); margin-bottom: var(--space-lg);">Ready to Submit?</h3>
+        <p style="color: var(--text-secondary); margin-bottom: var(--space-xl);">Your health data will be analyzed using advanced AI to provide personalized risk assessments and recommendations.</p>
+        <button type="submit" class="btn-modern btn-primary btn-lg">
+          <i class="fa fa-rocket" style="margin-right: 8px;"></i>
+          Analyze My Health Risk
+        </button>
       </div>
     </form>
   </div>
