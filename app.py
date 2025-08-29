@@ -100,7 +100,7 @@ def forgot_password():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return redirect(url_for('login'))  
+    return redirect(url_for('index'))
 
 @app.route('/about')
 def about():
@@ -1556,7 +1556,7 @@ def doctor_logout():
     session.pop("doctor_id", None)
     session.pop("doctor_name", None)
     flash("Signed out.", "info")
-    return redirect(url_for("doctor_login"))
+    return redirect(url_for("index"))
 
 
 @app.route("/doctor/home")
@@ -1774,7 +1774,7 @@ def hospital_logout():
     session.pop("hospital_id", None)
     session.pop("hospital_name", None)
     flash("Signed out.", "info")
-    return redirect(url_for("hospital_login"))
+    return redirect(url_for("index"))
 
 @app.route("/hospital/home")
 @hospital_login_required
