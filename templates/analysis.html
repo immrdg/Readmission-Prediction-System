@@ -51,7 +51,7 @@
                 Health Insights & Analytics
             </h1>
             <p class="dashboard-subtitle animate-fadeInUp" style="animation-delay: 0.2s;">
-                Welcome, {{ user_name }}! Analyze your health trends and get personalized recommendations based on your assessment history.
+                Welcome, {{ user_name if user_name else 'Patient' }}! Analyze your health trends and get personalized recommendations based on your assessment history.
             </p>
         </div>
 
@@ -79,7 +79,7 @@
         {% else %}
 
         <!-- Summary Statistics -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); margin-bottom: var(--space-3xl);" class="animate-fadeInUp" style="animation-delay: 0.4s;">
+        <div class="grid-modern grid-2 animate-fadeInUp" style="animation-delay: 0.4s; margin-bottom: var(--space-3xl);">
             <div class="card-modern" style="background: var(--background-primary); border-left: 4px solid var(--primary-color);">
                 <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
                     <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
@@ -189,6 +189,21 @@
                 </a>
             </div>
         </div>
+
+        <!-- Help Section -->
+        <div class="card-modern animate-fadeInUp" style="animation-delay: 1.2s; margin-top: var(--space-2xl); text-align: center; background: rgba(37, 99, 235, 0.05); border: 2px solid rgba(37, 99, 235, 0.1);">
+            <div style="margin-bottom: var(--space-lg);">
+                <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md);">
+                    <i class="fa fa-question-circle" style="font-size: 24px; color: white;"></i>
+                </div>
+                <h3 style="color: var(--primary-color); margin-bottom: var(--space-md);">Understanding Your Health Analytics</h3>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);">Need help interpreting your health trends or understanding your recommendations? Our team is here to guide you.</p>
+            </div>
+            <a href="{{ url_for('feedback') }}" class="btn-modern btn-primary">
+                <i class="fa fa-comment" style="margin-right: 8px;"></i>
+                Get Help with Analytics
+            </a>
+        </div>
     </div>
 
     <script>
@@ -213,6 +228,18 @@
             const charts = document.querySelectorAll('[id^="chart"]');
             charts.forEach(chart => {
                 Plotly.Plots.resize(chart);
+            });
+        });
+
+        // Enhanced chart interactions
+        document.querySelectorAll('[id^="chart"]').forEach(chart => {
+            chart.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform var(--transition-base)';
+            });
+
+            chart.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
             });
         });
     </script>
