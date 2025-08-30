@@ -44,106 +44,133 @@
     <div class="dashboard-container animate-fadeIn">
         <!-- Enhanced Header -->
         <div class="dashboard-header">
-            <div style="width: 100px; height: 100px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-xl); box-shadow: var(--shadow-xl);">
-                <i class="fa fa-chart-line" style="font-size: 40px; color: white;"></i>
+            <div style="width: 120px; height: 120px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-xl); box-shadow: var(--shadow-xl); position: relative;">
+                <i class="fa fa-chart-line" style="font-size: 48px; color: white;"></i>
+                <div style="position: absolute; bottom: 8px; right: 8px; width: 32px; height: 32px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white;">
+                    <i class="fa fa-brain" style="font-size: 12px; color: white;"></i>
+                </div>
             </div>
             <h1 class="dashboard-title animate-fadeInUp">
-                Health Insights & Analytics
+                AI Health Insights & Analytics
             </h1>
             <p class="dashboard-subtitle animate-fadeInUp" style="animation-delay: 0.2s;">
-                Welcome, {{ user_name if user_name else 'Patient' }}! Analyze your health trends and get personalized recommendations based on your assessment history.
+                Welcome, {{ user_name if user_name else 'Patient' }}! Discover deep insights into your health patterns, trends, and personalized recommendations powered by advanced machine learning.
             </p>
         </div>
 
         {% if no_data %}
         <!-- No Data State -->
-        <div class="card-modern animate-fadeInUp" style="animation-delay: 0.4s; text-align: center; padding: var(--space-3xl); background: var(--background-secondary); border: 2px dashed var(--border-color);">
-            <div style="width: 120px; height: 120px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-xl); opacity: 0.8;">
-                <i class="fa fa-chart-line" style="font-size: 48px; color: white;"></i>
-            </div>
-            <h2 style="color: var(--text-primary); margin-bottom: var(--space-lg); font-size: var(--text-2xl);">No Health Data Available</h2>
-            <p style="color: var(--text-secondary); margin-bottom: var(--space-2xl); max-width: 600px; margin-left: auto; margin-right: auto; font-size: var(--text-lg);">
-                You haven't completed any health assessments yet. Take your first comprehensive evaluation to start tracking your health trends and get personalized insights powered by AI.
-            </p>
-            <div style="display: flex; gap: var(--space-lg); justify-content: center; flex-wrap: wrap;">
-                <a href="{{ url_for('checkup') }}" class="btn-modern btn-primary btn-lg">
-                    <i class="fa fa-rocket" style="margin-right: 8px;"></i>
-                    Take Your First Assessment
-                </a>
-                <a href="{{ url_for('home') }}" class="btn-modern btn-outline btn-lg">
-                    <i class="fa fa-home" style="margin-right: 8px;"></i>
-                    Back to Dashboard
-                </a>
+        <div class="card-modern animate-fadeInUp" style="animation-delay: 0.4s; text-align: center; padding: var(--space-3xl); background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(59, 130, 246, 0.05) 100%); border: 2px dashed rgba(59, 130, 246, 0.2); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(59, 130, 246, 0.1); border-radius: 50%; opacity: 0.3;"></div>
+            <div style="position: absolute; bottom: -30px; left: -30px; width: 100px; height: 100px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; opacity: 0.4;"></div>
+
+            <div style="position: relative; z-index: 2;">
+                <div style="width: 140px; height: 140px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-xl); box-shadow: var(--shadow-xl);">
+                    <i class="fa fa-chart-line" style="font-size: 56px; color: white;"></i>
+                </div>
+                <h2 style="color: var(--text-primary); margin-bottom: var(--space-lg); font-size: var(--text-3xl); font-family: 'Playfair Display', serif;">No Health Data Available</h2>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-2xl); max-width: 600px; margin-left: auto; margin-right: auto; font-size: var(--text-lg); line-height: 1.6;">
+                    You haven't completed any health assessments yet. Take your first comprehensive evaluation to start tracking your health trends and get personalized insights powered by AI.
+                </p>
+                <div style="display: flex; gap: var(--space-lg); justify-content: center; flex-wrap: wrap;">
+                    <a href="{{ url_for('checkup') }}" class="btn-modern btn-primary btn-lg">
+                        <i class="fa fa-rocket" style="margin-right: 8px;"></i>
+                        Take Your First Assessment
+                    </a>
+                    <a href="{{ url_for('home') }}" class="btn-modern btn-outline btn-lg">
+                        <i class="fa fa-home" style="margin-right: 8px;"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
             </div>
         </div>
         {% else %}
 
         <!-- Summary Statistics -->
         <div class="grid-modern grid-2 animate-fadeInUp" style="animation-delay: 0.4s; margin-bottom: var(--space-3xl);">
-            <div class="card-modern" style="background: var(--background-primary); border-left: 4px solid var(--primary-color);">
-                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
-                    <div style="width: 50px; height: 50px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fa fa-heartbeat" style="font-size: 20px; color: white;"></i>
+            <div class="card-modern" style="background: var(--background-primary); border-left: 4px solid var(--primary-color); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(37, 99, 235, 0.1); border-radius: 50%; opacity: 0.5;"></div>
+                <div style="position: relative; z-index: 2;">
+                    <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
+                        <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg);">
+                            <i class="fa fa-heartbeat" style="font-size: 24px; color: white;"></i>
+                        </div>
+                        <h2 style="color: var(--primary-color); margin: 0; font-size: var(--text-2xl); font-family: 'Playfair Display', serif;">Current Health Status</h2>
                     </div>
-                    <h2 style="color: var(--primary-color); margin: 0; font-size: var(--text-xl); font-family: 'Playfair Display', serif;">Current Health Status</h2>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md);">
-                    {% for metric, data in summary_stats.items() %}
-                    <div style="background: var(--background-secondary); padding: var(--space-md); border-radius: var(--radius-lg); text-align: center;">
-                        <div style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-xs);">{{ data.name }}</div>
-                        <div style="font-size: var(--text-lg); font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-xs);">{{ data.current }} {{ data.unit }}</div>
-                        <div style="font-size: var(--text-xs); font-weight: 600; color: {{ data.status_color }};">{{ data.status }}</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md);">
+                        {% for metric, data in summary_stats.items() %}
+                        <div style="background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(37, 99, 235, 0.05) 100%); padding: var(--space-lg); border-radius: var(--radius-xl); text-align: center; border: 1px solid rgba(37, 99, 235, 0.1); transition: all var(--transition-base);" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            <div style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ data.name }}</div>
+                            <div style="font-size: var(--text-2xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-xs);">{{ data.current }} {{ data.unit }}</div>
+                            <div style="font-size: var(--text-xs); font-weight: 600; color: {{ data.status_color }}; padding: var(--space-xs) var(--space-sm); background: {{ 'rgba(16, 185, 129, 0.1)' if data.status_color == 'var(--success)' else ('rgba(245, 158, 11, 0.1)' if data.status_color == 'var(--warning)' else 'rgba(239, 68, 68, 0.1)') }}; border-radius: var(--radius-md);">{{ data.status }}</div>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
 
-            <div class="card-modern" style="background: var(--background-primary); border-left: 4px solid var(--secondary-color);">
-                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
-                    <div style="width: 50px; height: 50px; background: var(--gradient-success); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fa fa-trending-up" style="font-size: 20px; color: white;"></i>
-                    </div>
-                    <h2 style="color: var(--secondary-color); margin: 0; font-size: var(--text-xl); font-family: 'Playfair Display', serif;">Health Trends</h2>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-md);">
-                    {% for metric, trend in trends.items() %}
-                    <div style="background: var(--background-secondary); padding: var(--space-md); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: space-between;">
-                        <div>
-                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-xs);">{{ summary_stats[metric].name if metric in summary_stats else metric.replace('_', ' ').title() }}</div>
-                            <div style="font-size: var(--text-sm); color: var(--text-secondary);">{{ trend.direction }} ({{ trend.change_percent }}%)</div>
+            <div class="card-modern" style="background: var(--background-primary); border-left: 4px solid var(--secondary-color); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -20px; left: -20px; width: 80px; height: 80px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; opacity: 0.5;"></div>
+                <div style="position: relative; z-index: 2;">
+                    <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
+                        <div style="width: 60px; height: 60px; background: var(--gradient-success); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg);">
+                            <i class="fa fa-trending-up" style="font-size: 24px; color: white;"></i>
                         </div>
-                        <div style="font-size: var(--text-xl); color: {{ trend.color }};">{{ trend.icon }}</div>
+                        <h2 style="color: var(--secondary-color); margin: 0; font-size: var(--text-2xl); font-family: 'Playfair Display', serif;">Health Trends</h2>
                     </div>
-                    {% endfor %}
+                    <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-md);">
+                        {% for metric, trend in trends.items() %}
+                        <div style="background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(16, 185, 129, 0.05) 100%); padding: var(--space-lg); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(16, 185, 129, 0.1); transition: all var(--transition-base);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-xs); font-size: var(--text-base);">{{ summary_stats[metric].name if metric in summary_stats else metric.replace('_', ' ').title() }}</div>
+                                <div style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-xs);">
+                                    <span style="padding: var(--space-xs) var(--space-sm); background: {{ 'rgba(16, 185, 129, 0.1)' if trend.direction == 'Improving' else ('rgba(239, 68, 68, 0.1)' if trend.direction == 'Declining' else 'rgba(107, 114, 128, 0.1)') }}; color: {{ trend.color }}; border-radius: var(--radius-md); font-weight: 600; font-size: var(--text-xs);">
+                                        {{ trend.direction }}
+                                    </span>
+                                    <span>({{ trend.change_percent }}%)</span>
+                                </div>
+                            </div>
+                            <div style="font-size: var(--text-2xl); color: {{ trend.color }};">{{ trend.icon }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Health Recommendations -->
-        <div class="card-modern animate-fadeInUp" style="animation-delay: 0.6s; background: var(--background-primary); border-left: 4px solid var(--info); margin-bottom: var(--space-3xl);">
-            <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
-                <div style="width: 50px; height: 50px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <i class="fa fa-lightbulb-o" style="font-size: 20px; color: white;"></i>
-                </div>
-                <h2 style="color: var(--info); margin: 0; font-size: var(--text-xl); font-family: 'Playfair Display', serif;">Personalized Recommendations</h2>
-            </div>
-            <div style="display: grid; gap: var(--space-md);">
-                {% for rec in recommendations %}
-                <div style="background: var(--background-secondary); padding: var(--space-lg); border-radius: var(--radius-lg); border-left: 4px solid {{ 'var(--error)' if rec.priority == 'high' else ('var(--warning)' if rec.priority == 'medium' else 'var(--success)') }};">
-                    <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
-                        <div style="width: 40px; height: 40px; background: {{ 'var(--gradient-primary)' if rec.priority == 'high' else ('linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)' if rec.priority == 'medium' else 'var(--gradient-success)') }}; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i class="fa fa-{{ 'exclamation' if rec.priority == 'high' else ('warning' if rec.priority == 'medium' else 'check') }}" style="font-size: 16px; color: white;"></i>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-xs); font-size: var(--text-base);">{{ rec.category }}</div>
-                            <div style="color: var(--text-secondary); line-height: 1.5;">{{ rec.message }}</div>
-                        </div>
-                        <div style="padding: var(--space-xs) var(--space-sm); background: {{ 'rgba(239, 68, 68, 0.1)' if rec.priority == 'high' else ('rgba(245, 158, 11, 0.1)' if rec.priority == 'medium' else 'rgba(16, 185, 129, 0.1)') }}; color: {{ 'var(--error)' if rec.priority == 'high' else ('var(--warning)' if rec.priority == 'medium' else 'var(--success)') }}; border-radius: var(--radius-md); font-size: var(--text-xs); font-weight: 600; text-transform: uppercase;">
-                            {{ rec.priority }}
-                        </div>
+        <div class="card-modern animate-fadeInUp" style="animation-delay: 0.6s; background: var(--background-primary); border-left: 4px solid var(--info); margin-bottom: var(--space-3xl); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; right: 0; width: 200px; height: 200px; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%); opacity: 0.5;"></div>
+            <div style="position: relative; z-index: 2;">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
+                    <div style="width: 60px; height: 60px; background: var(--gradient-secondary); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg);">
+                        <i class="fa fa-lightbulb-o" style="font-size: 24px; color: white;"></i>
+                    </div>
+                    <div>
+                        <h2 style="color: var(--info); margin: 0; font-size: var(--text-2xl); font-family: 'Playfair Display', serif;">AI-Powered Recommendations</h2>
+                        <p style="color: var(--text-secondary); margin: 0; font-size: var(--text-sm);">Personalized insights based on your health data analysis</p>
                     </div>
                 </div>
-                {% endfor %}
+                <div style="display: grid; gap: var(--space-lg);">
+                    {% for rec in recommendations %}
+                    <div style="background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(59, 130, 246, 0.03) 100%); padding: var(--space-xl); border-radius: var(--radius-xl); border-left: 4px solid {{ 'var(--error)' if rec.priority == 'high' else ('var(--warning)' if rec.priority == 'medium' else 'var(--success)') }}; transition: all var(--transition-base); position: relative;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-xl)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)'">
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-lg);">
+                            <div style="width: 50px; height: 50px; background: {{ 'var(--gradient-primary)' if rec.priority == 'high' else ('linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)' if rec.priority == 'medium' else 'var(--gradient-success)') }}; border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: var(--shadow-md);">
+                                <i class="fa fa-{{ 'exclamation' if rec.priority == 'high' else ('warning' if rec.priority == 'medium' else 'check') }}" style="font-size: 20px; color: white;"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md);">
+                                    <div style="font-weight: 700; color: var(--text-primary); font-size: var(--text-lg); font-family: 'Playfair Display', serif;">{{ rec.category }}</div>
+                                    <div style="padding: var(--space-xs) var(--space-md); background: {{ 'rgba(239, 68, 68, 0.1)' if rec.priority == 'high' else ('rgba(245, 158, 11, 0.1)' if rec.priority == 'medium' else 'rgba(16, 185, 129, 0.1)') }}; color: {{ 'var(--error)' if rec.priority == 'high' else ('var(--warning)' if rec.priority == 'medium' else 'var(--success)') }}; border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                        {{ rec.priority }} Priority
+                                    </div>
+                                </div>
+                                <div style="color: var(--text-secondary); line-height: 1.7; font-size: var(--text-base);">{{ rec.message }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
@@ -151,19 +178,29 @@
         {% if charts %}
         <div class="animate-fadeInUp" style="animation-delay: 0.8s;">
             {% for chart_id, chart in charts.items() %}
-            <div class="card-modern" style="margin-bottom: var(--space-2xl); padding: 0; overflow: hidden;">
-                <div style="padding: var(--space-xl) var(--space-xl) var(--space-lg); background: var(--gradient-primary); color: white;">
-                    <h3 style="margin: 0; font-size: var(--text-xl); font-weight: 600; display: flex; align-items: center; gap: var(--space-sm);">
-                        <i class="fa fa-bar-chart"></i>
-                        Health Trend Analysis
-                    </h3>
+            <div class="card-modern" style="margin-bottom: var(--space-3xl); padding: 0; overflow: hidden; border: 1px solid var(--border-light);">
+                <div style="padding: var(--space-2xl) var(--space-2xl) var(--space-lg); background: var(--gradient-primary); color: white; position: relative;">
+                    <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; transform: translate(30px, -30px);"></div>
+                    <div style="position: relative; z-index: 2;">
+                        <h3 style="margin: 0; font-size: var(--text-2xl); font-weight: 700; display: flex; align-items: center; gap: var(--space-md); font-family: 'Playfair Display', serif;">
+                            <div style="width: 50px; height: 50px; background: rgba(255, 255, 255, 0.2); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+                                <i class="fa fa-bar-chart" style="font-size: 20px;"></i>
+                            </div>
+                            Health Trend Analysis
+                        </h3>
+                        <p style="margin: var(--space-sm) 0 0; opacity: 0.9; font-size: var(--text-base);">Interactive visualization of your health metrics over time</p>
+                    </div>
                 </div>
-                <div style="padding: var(--space-lg);">
-                    <div id="{{ chart_id }}" style="width: 100%; height: 400px;"></div>
+                <div style="padding: var(--space-2xl); background: var(--background-secondary);">
+                    <div id="{{ chart_id }}" style="width: 100%; height: 450px; border-radius: var(--radius-lg); background: white; box-shadow: var(--shadow-md);"></div>
                 </div>
                 <script>
                     var chart = {{ chart|safe }};
-                    Plotly.newPlot('{{ chart_id }}', chart.data, chart.layout, {responsive: true});
+                    chart.layout.paper_bgcolor = 'white';
+                    chart.layout.plot_bgcolor = 'rgba(249, 250, 251, 0.5)';
+                    chart.layout.font = {family: 'Inter, sans-serif', size: 12, color: '#374151'};
+                    chart.layout.margin = {t: 40, b: 60, l: 60, r: 40};
+                    Plotly.newPlot('{{ chart_id }}', chart.data, chart.layout, {responsive: true, displayModeBar: false});
                 </script>
             </div>
             {% endfor %}
@@ -174,7 +211,7 @@
 
         <!-- Action Buttons -->
         <div class="animate-fadeInUp" style="animation-delay: 1s; text-align: center; margin-top: var(--space-2xl);">
-            <div style="display: flex; gap: var(--space-lg); justify-content: center; flex-wrap: wrap;">
+            <div style="display: flex; gap: var(--space-lg); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-2xl);">
                 <a href="{{ url_for('checkup') }}" class="btn-modern btn-primary btn-lg">
                     <i class="fa fa-plus-circle" style="margin-right: 8px;"></i>
                     Take New Assessment
@@ -191,18 +228,21 @@
         </div>
 
         <!-- Help Section -->
-        <div class="card-modern animate-fadeInUp" style="animation-delay: 1.2s; margin-top: var(--space-2xl); text-align: center; background: rgba(37, 99, 235, 0.05); border: 2px solid rgba(37, 99, 235, 0.1);">
-            <div style="margin-bottom: var(--space-lg);">
-                <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-md);">
-                    <i class="fa fa-question-circle" style="font-size: 24px; color: white;"></i>
+        <div class="card-modern animate-fadeInUp" style="animation-delay: 1.2s; text-align: center; background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%); border: 2px solid rgba(37, 99, 235, 0.1); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grain\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><circle cx=\"50\" cy=\"50\" r=\"1\" fill=\"rgba(37,99,235,0.05)\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grain)\"/></svg>'); opacity: 0.3;"></div>
+            <div style="position: relative; z-index: 2;">
+                <div style="margin-bottom: var(--space-lg);">
+                    <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-lg); box-shadow: var(--shadow-xl);">
+                        <i class="fa fa-question-circle" style="font-size: 32px; color: white;"></i>
+                    </div>
+                    <h3 style="color: var(--primary-color); margin-bottom: var(--space-md); font-size: var(--text-2xl); font-family: 'Playfair Display', serif;">Understanding Your Health Analytics</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-xl); max-width: 600px; margin-left: auto; margin-right: auto; font-size: var(--text-base); line-height: 1.6;">Need help interpreting your health trends or understanding your recommendations? Our team of healthcare professionals is here to guide you through your personalized insights.</p>
                 </div>
-                <h3 style="color: var(--primary-color); margin-bottom: var(--space-md);">Understanding Your Health Analytics</h3>
-                <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);">Need help interpreting your health trends or understanding your recommendations? Our team is here to guide you.</p>
+                <a href="{{ url_for('feedback') }}" class="btn-modern btn-primary btn-lg">
+                    <i class="fa fa-comment" style="margin-right: 8px;"></i>
+                    Get Expert Help with Analytics
+                </a>
             </div>
-            <a href="{{ url_for('feedback') }}" class="btn-modern btn-primary">
-                <i class="fa fa-comment" style="margin-right: 8px;"></i>
-                Get Help with Analytics
-            </a>
         </div>
     </div>
 
@@ -234,7 +274,7 @@
         // Enhanced chart interactions
         document.querySelectorAll('[id^="chart"]').forEach(chart => {
             chart.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.02)';
+                this.style.transform = 'scale(1.01)';
                 this.style.transition = 'transform var(--transition-base)';
             });
 
@@ -242,6 +282,24 @@
                 this.style.transform = 'scale(1)';
             });
         });
+
+        // Floating animation for decorative elements
+        document.querySelectorAll('[style*="position: absolute"]').forEach((element, index) => {
+            if (element.style.background && element.style.background.includes('rgba')) {
+                element.style.animation = `float ${6 + index}s ease-in-out infinite`;
+                element.style.animationDelay = `${index * 2}s`;
+            }
+        });
+
+        // Add CSS for floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-10px) rotate(180deg); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
